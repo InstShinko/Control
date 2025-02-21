@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { auth} from '../BD/firebase-config';
+import {signInWithEmailAndPassword } from "firebase/auth";
+import logo from '../logo.png';
+
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -8,17 +12,27 @@ function Login() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    // Simulamos una autenticación exitosa
-    if (username === 'daniel' && password === 'mapache') {
-      navigate('/home'); // Redirecciona a la pantalla principal
-    } else {
-      alert('Credenciales incorrectas');
-    }
+
+    signInWithEmailAndPassword(auth, username, password)
+      .then((userCredential) => {
+        navigate('/home'); // Redirecciona a la pantalla principal
+      })
+      .catch((error) => {
+       alert('Error al iniciar sesión: ' +  error.message);
+      });
+
   };
 
   return (
-    <div className='container'>
+    <div className='container-fluid bg-dark text-white p-4 '  style={{ minHeight: '100vh' }}>
     
+
+
+      <div className='container'> 
+
+
+      <img src={logo}  className='img-fluid mx-auto d-block' alt='logotipo' />
+
       <input
         className='form-control m-2'
         type="text"
@@ -34,6 +48,8 @@ function Login() {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={handleLogin} className='btn btn-primary w-100 m-2'>Iniciar sesión</button>
+      </div>
+      
     </div>
   );
 }
