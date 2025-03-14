@@ -6,14 +6,9 @@ function Layout({ children }) {
   const location = useLocation();
   return (
     <div style={styles.container}>
-
-
-      {/* Contenedor principal (Sidebar + contenido) */}
       <div style={styles.content}>
       {location.pathname !== '/login' && <Barra />}
       {<main style={styles.main}>{children}</main>}
-     
-        
       </div>
     </div>
   );

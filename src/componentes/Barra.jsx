@@ -1,13 +1,14 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Offcanvas, Button, Accordion } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 import { useAuth } from '../BD/AuthContext';
 
 function Barra() {
   const [show, setShow] = React.useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { currentUser } = useAuth();
 
   const handleClose = () => setShow(false);
@@ -28,6 +29,16 @@ function Barra() {
     handleClose();
   };
 
+  const handleNavigateToRegistro = () => {
+    navigate('/registro');
+    handleClose();
+  };
+
+  const handleNavigateToticket = () => {
+    navigate('/ticket');
+    handleClose();
+  };
+
   const CerrarSesion = () => {
     const auth = getAuth();
     signOut(auth)
@@ -40,8 +51,9 @@ function Barra() {
       });
   };
 
-  if (!currentUser) {
-    return null; // No renderizar el componente Barra si no hay usuario autenticado
+  // Condicionar el renderizado de la barra basado en la ruta actual
+  if (!currentUser || location.pathname === '/ticket') {
+    return null; // No renderizar el componente Barra si no hay usuario autenticado o si la ruta es /ticket
   }
 
   return (
@@ -56,7 +68,7 @@ function Barra() {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <ul className="list-group">
-            <li className="list-group-item">Registro</li>
+            <li className="list-group-item" onClick={handleNavigateToRegistro}>Registro</li>
 
             <Accordion>
               <Accordion.Item eventKey="0">
@@ -72,7 +84,7 @@ function Barra() {
                     <li className="list-group-item" onClick={handleNavigateToCobro}>
                       Pago Extra
                     </li>
-                    <li className="list-group-item">Ver Adeudos por Horario</li>
+                    <li className="list-group-item" onClick={handleNavigateToticket}>Ver Adeudos por Horario</li>
                     <li className="list-group-item">Adeudos Generales</li>
                     <li className="list-group-item">Comenzar Semana</li>
                   </ul>

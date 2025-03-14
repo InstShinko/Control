@@ -5,10 +5,10 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../BD/firebase-config';
 
 function Home() {
-  const [cursosMultiples, setCursosMultiples] = useState([]);
+const [cursosMultiples, setCursosMultiples] = useState([]);
  const [alumno, setAlumno] = useState('');
  const [alumnosOptions, setAlumnosOptions] = useState([]);
-  const [datos, setDatos] = useState(
+ const [datos, setDatos] = useState(
     {
       id: '',
       nombre: '',
@@ -21,7 +21,7 @@ function Home() {
   );
 
   useEffect(() => {
-    const fetchAlumnos = async () => {
+      const fetchAlumnos = async () => {
       const q = query(collection(db, 'Alumnos'), where('Estado', '==', 'Activo'));
       const querySnapshot = await getDocs(q);
       const alumnosList = querySnapshot.docs.map(doc => ({
@@ -92,7 +92,7 @@ function Home() {
               placeholder="Nombre del Alumno"
               className="form-control m-2 w-100"
               isClearable
-            />
+              />
 <button className="btn btn-primary m-2 w-100" onClick={handleVerCursosMultiples}>Ver Ids de Cursos Multiples</button>
             <div id="cursosmultiples" className="m-2">
               {cursosMultiples.map((curso, index) => (

@@ -6,6 +6,8 @@ import Login from './paginas/Login';
 import Home from './paginas/Home';
 import Cobro from './paginas/Cobro';
 import BusID from './paginas/BusID';
+import Registro from './paginas/Registro';
+import Ticket from './paginas/Ticket';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/cobro" element={<Cobro />} />
             <Route path="/busID" element={<BusID />} />
+            <Route path="/registro" element={<Registro />} />
+            <Route path="/ticket" element={<Ticket />} />
             <Route path="/" element={<Navigate to="/login" />} />
           </Routes>
         </Layout>
