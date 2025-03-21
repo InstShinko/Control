@@ -1,6 +1,8 @@
 import React from 'react';
 import logoN from '../Vnegro.png';
 import { useLocation } from 'react-router-dom';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../BD/firebase-config';
 
 function Ticket() {
   const location = useLocation();
@@ -9,19 +11,58 @@ function Ticket() {
   const datosAlumno = {
     matricula: searchParams.get('matricula'),
     nombre: searchParams.get('nombre'),
-    telefono: searchParams.get('telefono'),
-    direccion: searchParams.get('direccion'),
-    correo: searchParams.get('correo'),
     curso: searchParams.get('curso'),
-    horario: searchParams.get('horario'),
-    colegiatura: searchParams.get('colegiatura'),
-    asesor: searchParams.get('asesor'),
+    monto: searchParams.get('monto'),
+    cambio: searchParams.get('cambio'),
     tipo: searchParams.get('tipo'),
     folio: searchParams.get('folio'),
-    monto: searchParams.get('monto'),
     pago: searchParams.get('pago'),
-    cambio: searchParams.get('cambio')
+    pagos: searchParams.get('pagos'),
+    semana: searchParams.get('semana'),
+    concepto: searchParams.get('concepto'),
+    fecha: new Date().toLocaleDateString()
   };
+
+  const guardarFolioEnFirebase = async () => {
+    try {
+      // Obtener el número de folio actual desde la colección Matriculas
+      const matriculaDoc = await getDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'));
+      if (matriculaDoc.exists()) {
+  
+
+
+        
+        // Guardar los datos del ticket en la colección Folios
+        await setDoc(doc(db, 'Folios', datosAlumno.folio.toString()), {
+          Folio: datosAlumno.folio,
+          Matricula: datosAlumno.matricula,
+          Nombre: datosAlumno.nombre,
+          Monto: parseFloat(datosAlumno.monto),
+          Cambio: parseFloat(datosAlumno.cambio),
+          Concepto: datosAlumno.concepto,
+        
+          Fecha: datosAlumno.fecha
+        }
+      );
+
+
+        // Actualizar el número de folio en la colección Matriculas
+        await updateDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'), {
+          Folio: datosAlumno.folio
+        });
+
+        console.log('Folio guardado con éxito');
+      } else {
+        console.error('No se encontró el documento de Matriculas');
+      }
+    } catch (error) {
+      console.error('Error al guardar el folio:', error);
+    }
+  };
+
+  React.useEffect(() => {
+    guardarFolioEnFirebase();
+  });
 
   const renderTicketContent = () => {
     switch (datosAlumno.tipo) {
@@ -29,6 +70,7 @@ function Ticket() {
         return (
           <>
             <p><strong>Concepto:</strong> Inscripción</p>
+            <p><strong>Curso:</strong>{datosAlumno.curso}</p>
             <p><strong>Monto de Inscripción:</strong> ${datosAlumno.monto}</p>
             <p><strong>Pago de Inscripción:</strong> ${datosAlumno.pago}</p>
             <p><strong>Cambio:</strong> ${datosAlumno.cambio}</p>
@@ -38,20 +80,29 @@ function Ticket() {
         return (
           <>
             <p><strong>Concepto:</strong> Colegiatura</p>
-            <p><strong>Monto:</strong> ${datosAlumno.colegiatura}</p>
+            <p><strong>Curso:</strong>{datosAlumno.curso}</p>
+            <p><strong>Semana:</strong>{datosAlumno.semana}</p>
+            <p><strong>Pagos:</strong>{datosAlumno.pagos}</p>
+            <p><strong>Colegiatura:</strong> ${datosAlumno.pago}</p>
+            <p><strong>Monto:</strong> ${datosAlumno.monto}</p>
+            <p><strong>Cambio:</strong> ${datosAlumno.cambio}</p>
           </>
         );
       case 'pagoExtra':
         return (
           <>
-            <p><strong>Concepto:</strong> Pago Extra</p>
-            <p><strong>Monto:</strong> ${datosAlumno.pagoExtra}</p>
+            <p><strong>Curso:</strong>{datosAlumno.curso}</p>
+            <p><strong>Concepto:</strong>{datosAlumno.semana}</p>
+            <p><strong>Costo:</strong> ${datosAlumno.pago}</p>
+            <p><strong>Monto:</strong> ${datosAlumno.monto}</p>
+            <p><strong>Cambio:</strong> ${datosAlumno.cambio}</p>
           </>
         );
       default:
         return null;
     }
   };
+
 
   return (
     <div className='container-fluid bg-light p-4' style={{ minHeight: '100vh' }}>

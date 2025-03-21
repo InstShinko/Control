@@ -30,6 +30,19 @@ function Registro() {
     { value: "Asesor 3", label: "Asesor 3" },
   ];
 
+  const profesores = [
+    { value: "ALINE ESMERALDA MALDONADO SAMPAYO", label: "ALINE ESMERALDA MALDONADO SAMPAYO" },
+    { value: "ANGEL JOEL ALVAREZ CABALLERO", label: "ANGEL JOEL ALVAREZ CABALLERO" },
+    { value: "DANIEL GARRIDO LUNA", label: "DANIEL GARRIDO LUNA" },
+    { value: "JAEL ALVAREZ CABALLERO", label: "JAEL ALVAREZ CABALLERO" },
+    { value: "GERARDO DIAZ ARROYO", label: "GERARDO DIAZ ARROYO" },
+    { value: "JORGE IGNACIO MANRIQUEZ", label: "JORGE IGNACIO MANRIQUEZ" },
+    { value: "LIZETH ALVAREZ CABALLERO", label: "LIZETH ALVAREZ CABALLERO" },
+    { value: "JPAOLA MONSERRATH ORTEGA SANCHEZ", label: "PAOLA MONSERRATH ORTEGA SANCHEZ" },
+    { value: "SAUL JIMENEZ MERCADO", label: "SAUL JIMENEZ MERCADO" },
+    
+  ];
+
   const [datosAlumno, setDatosAlumno] = useState({
     nombre: '',
     telefono: '',
@@ -41,6 +54,7 @@ function Registro() {
     asesor: '',
     monto: '',
     pago: '',
+    profesor: ''
   });
 
 
@@ -98,7 +112,8 @@ function Registro() {
           Deuda: 1,
           FechaR: new Date().toLocaleDateString(),
           Inscrito: datosAlumno.asesor,
-          Promedio: 0
+          Promedio: 0,
+          Profesor: datosAlumno.profesor
         });
 
         // Actualizar la matrícula y el folio en Firebase
@@ -107,13 +122,14 @@ function Registro() {
           Folio: nuevoFolio
         });
 
+
+        const concepto= 'Inscripción';
         // Crear una URL con los datos del alumno y el tipo de ticket
-        const ticketUrl = `/ticket?matricula=${nuevaMatricula}&nombre=${encodeURIComponent(datosAlumno.nombre)}&telefono=${encodeURIComponent(datosAlumno.telefono)}&direccion=${encodeURIComponent(datosAlumno.direccion)}&correo=${encodeURIComponent(datosAlumno.correo)}&curso=${encodeURIComponent(datosAlumno.curso)}&horario=${encodeURIComponent(datosAlumno.horario)}&colegiatura=${encodeURIComponent(datosAlumno.colegiatura)}&asesor=${encodeURIComponent(datosAlumno.asesor)}&tipo=inscripcion&folio=${nuevoFolio}&monto=${datosAlumno.monto}&pago=${datosAlumno.pago}&cambio=${cambio}`;
+        const ticketUrl = `/ticket?matricula=${nuevaMatricula}&nombre=${encodeURIComponent(datosAlumno.nombre)}&telefono=${encodeURIComponent(datosAlumno.telefono)}&direccion=${encodeURIComponent(datosAlumno.direccion)}&correo=${encodeURIComponent(datosAlumno.correo)}&curso=${encodeURIComponent(datosAlumno.curso)}&horario=${encodeURIComponent(datosAlumno.horario)}&colegiatura=${encodeURIComponent(datosAlumno.colegiatura)}&asesor=${encodeURIComponent(datosAlumno.asesor)}&tipo=inscripcion&folio=${nuevoFolio}&concepto=${concepto}&monto=${datosAlumno.monto}&pago=${datosAlumno.pago}&cambio=${cambio}`;
 
         // Abrir la URL en una nueva pestaña
         window.open(ticketUrl, '_blank');
 
-        alert('Alumno registrado con éxito');
       } else {
         alert('No se encontró la matrícula actual');
       }
@@ -138,6 +154,9 @@ function Registro() {
           value={datosAlumno.nombre}
           onChange={handleChange}
         />
+
+<div className='d-flex flex-row my-2'>
+
         <input
           type="number"
           placeholder="Numero de contacto del Alumno"
@@ -146,14 +165,7 @@ function Registro() {
           value={datosAlumno.telefono}
           onChange={handleChange}
         />
-        <input
-          type="text"
-          placeholder="Dirección del Alumno"
-          className="form-control m-2"
-          name="direccion"
-          value={datosAlumno.direccion}
-          onChange={handleChange}
-        />
+
         <input
           type="text"
           placeholder="Correo electronico del Alumno"
@@ -162,6 +174,21 @@ function Registro() {
           value={datosAlumno.correo}
           onChange={handleChange}
         />
+
+</div>
+
+<div className='d-flex flex-row justify-content-center'>
+          <h1 className='display-3'>Datos del Curso</h1>
+        </div>
+
+        <Select
+            options={profesores}
+            placeholder="¿Quien dara el curso?"
+            className="form-select m-2"
+            name="profesor"
+            value={profesores.find(option => option.value === datosAlumno.profesor)}
+            onChange={handleSelectChange}
+          />
 
         <div className='d-flex flex-row my-2'>
           <Select
@@ -175,7 +202,7 @@ function Registro() {
 
           <input
             type="text"
-            placeholder="Horario del Alumno"
+            placeholder="Horario del Curso"
             className="form-control m-2"
             name="horario"
             value={datosAlumno.horario}
@@ -183,7 +210,7 @@ function Registro() {
           />
           <input
             type="number"
-            placeholder="Colegiatura del Alumno"
+            placeholder="Colegiatura del Curso"
             className="form-control m-2"
             name="colegiatura"
             value={datosAlumno.colegiatura}
@@ -194,7 +221,7 @@ function Registro() {
         <div className='d-flex flex-row my-2'>
           <Select
             options={asesores}
-            placeholder="Asesor"
+            placeholder="¿Quien atendio?"
             className="form-select m-2"
             name="asesor"
             value={asesores.find(option => option.value === datosAlumno.asesor)}

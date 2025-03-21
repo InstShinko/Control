@@ -34,10 +34,7 @@ function Barra() {
     handleClose();
   };
 
-  const handleNavigateToticket = () => {
-    navigate('/ticket');
-    handleClose();
-  };
+
 
   const CerrarSesion = () => {
     const auth = getAuth();
@@ -84,9 +81,22 @@ function Barra() {
                     <li className="list-group-item" onClick={handleNavigateToCobro}>
                       Pago Extra
                     </li>
-                    <li className="list-group-item" onClick={handleNavigateToticket}>Ver Adeudos por Horario</li>
+                    <li className="list-group-item" >Ver Adeudos por Horario</li>
                     <li className="list-group-item">Adeudos Generales</li>
-                    <li className="list-group-item">Comenzar Semana</li>
+                   
+                  </ul>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+
+            <Accordion>
+              <Accordion.Item eventKey="1">
+                <Accordion.Header>Adeudos</Accordion.Header>
+                <Accordion.Body>
+                  <ul className="list-group">
+                    <li className="list-group-item">Ver por horario</li>
+                    <li className="list-group-item">Ver por profesor</li>
+                    <li className="list-group-item">Ver adeudos generales</li>
                   </ul>
                 </Accordion.Body>
               </Accordion.Item>
@@ -104,6 +114,7 @@ function Barra() {
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
+
 
             <Accordion>
               <Accordion.Item eventKey="">
@@ -130,9 +141,19 @@ function Barra() {
               </Accordion.Item>
             </Accordion>
 
-            <li className="list-group-item" onClick={CerrarSesion}>
+           <div className='my-5'>
+           <li className="list-group-item bg-success text-white my-2">
+              Comenzar Semana
+            </li>
+
+            <li className="list-group-item bg-danger text-white my-2" onClick={CerrarSesion}>
               Cerrar Sesión
             </li>
+
+           </div>
+
+       
+
           </ul>
         </Offcanvas.Body>
       </Offcanvas>

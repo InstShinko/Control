@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Select from 'react-select';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../BD/firebase-config';
 
 function Home() {
@@ -16,9 +16,14 @@ const [cursosMultiples, setCursosMultiples] = useState([]);
       horario: '',
       pendiente: '',
       pago: '',
-      total: ''
+      total: '',
+      semana: '',
+      pagos: '',
+      monto: ''
     }
   );
+
+
 
   useEffect(() => {
       const fetchAlumnos = async () => {
@@ -61,7 +66,7 @@ const [cursosMultiples, setCursosMultiples] = useState([]);
     }
   };
 
-   const handleVerCursosMultiples = async () => {
+  const handleVerCursosMultiples = async () => {
       if (alumno) {
         const q = query(collection(db, 'Alumnos'), where('Nombre', '==', alumno));
         const querySnapshot = await getDocs(q);
@@ -74,6 +79,97 @@ const [cursosMultiples, setCursosMultiples] = useState([]);
         setCursosMultiples(cursosList);
       }
     };
+
+  const BuscarID = async (identificador) => {
+
+    const docRef = doc(db, "Alumnos", identificador);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+    
+      setDatos({
+        id: docSnap.id,
+        nombre: docSnap.data().Nombre,
+        curso: docSnap.data().Curso,
+        horario: docSnap.data().Horario,
+        pendiente: docSnap.data().Deuda,
+        pago: docSnap.data().Colegiatura,
+        total: docSnap.data().Deuda*docSnap.data().Colegiatura
+      });
+
+    } else {
+     alert("No existe un alumno con ese ID");
+}
+   
+
+  };
+
+
+  const CobrarAlumno = async () => {
+    try {
+
+      // Obtener el folio actual desde Firebase
+       const matriculaDoc = await getDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'));
+      if (matriculaDoc.exists()) {
+
+        let folioActual = matriculaDoc.data().Folio;
+
+        folioActual = parseInt(folioActual);
+
+        // Incrementar  el folio
+
+        const nuevoFolio = folioActual + 1;
+
+        setDatos.pagos=parseInt(datos.pagos);
+        setDatos.monto=parseFloat(datos.monto);
+        setDatos.pago=parseFloat(datos.pago);      
+
+       const cambio= datos.monto - (datos.pago * datos.pagos);
+
+
+          // Actualizar la deuda del alumno
+          const alumnoDocRef = doc(db, 'Alumnos', datos.id); // `datos.id` es la matrícula del alumno
+          const alumnoDoc = await getDoc(alumnoDocRef);
+    
+          if (alumnoDoc.exists()) {
+            const deudaActual = alumnoDoc.data().Deuda;
+    
+            // Restar 1 a la deuda
+            const nuevaDeuda = deudaActual - datos.pagos;
+    
+            // Asegurarse de que la deuda no sea negativa
+            await updateDoc(alumnoDocRef, {
+              Deuda: nuevaDeuda
+            });
+    
+            console.log(`Deuda actualizada: ${nuevaDeuda}`);
+          } else {
+            console.error('No se encontró el documento del alumno');
+            alert('No se encontró el alumno en la base de datos');
+            return;
+          }
+      
+
+
+          const concepto= 'Colegiatura';
+
+
+        // Crear una URL con los datos del alumno y el tipo de ticket
+        const ticketUrl = `/ticket?matricula=${encodeURIComponent(datos.id)}&nombre=${encodeURIComponent(datos.nombre)}&curso=${encodeURIComponent(datos.curso)}&tipo=colegiatura&folio=${nuevoFolio}&concepto=${concepto}&monto=${encodeURIComponent(datos.monto)}&pago=${encodeURIComponent(datos.pago)}&cambio=${cambio}&semana=${encodeURIComponent(datos.semana)}&pagos=${encodeURIComponent(datos.pagos)}`;
+
+        // Abrir la URL en una nueva pestaña
+        window.open(ticketUrl, '_blank');
+
+       
+      } else {
+        alert('No se encontró la matrícula actual');
+      }
+    } catch (error) {
+      console.error('Error al registrar el alumno:', error);
+      alert('Error al registrar el alumno');
+    }
+  };
+
 
   return (
 
@@ -94,9 +190,9 @@ const [cursosMultiples, setCursosMultiples] = useState([]);
               isClearable
               />
 <button className="btn btn-primary m-2 w-100" onClick={handleVerCursosMultiples}>Ver Ids de Cursos Multiples</button>
-            <div id="cursosmultiples" className="m-2">
+            <div className="m-2">
               {cursosMultiples.map((curso, index) => (
-                <div key={index} className="card m-2">
+                <div key={index} className="card m-2" onClick={BuscarID.bind(this, curso.id)}>
                   <div className="card-body bg-light">
                     <div className="d-flex flex-row">
                       <p className="card-text"><strong>ID: </strong></p>
@@ -163,23 +259,36 @@ const [cursosMultiples, setCursosMultiples] = useState([]);
                </div>
 
 
-                  <div className="d-flex flex-row align-items-center">
-                     <p className="card-text text-white"><strong>Semana: </strong></p>
-                     <input type="text" placeholder="¿Qué semana o semanas se están pagando?"   className="form-control m-2" />
-                     </div>
-            
-               <div className="d-flex flex-row">
-                     <p className="card-text text-white"><strong>Numero de pagos: </strong></p>
-                     <input type="number" value={1}   className="form-control m-2" />
-               </div>
+                  
+                     <input type="text"
+                     placeholder="¿Qué semana o semanas se están pagando?"   
+                     className="form-control my-2" 
+                     value={datos.semana}
+                     name='semana'
+                     onChange={(e) => setDatos({ ...datos, [e.target.name]: e.target.value })}
+                     />
+                 
 
-               <div className="d-flex flex-row">
-                     <p className="card-text text-white"><strong>Con cuanto pagan: </strong></p>
-                     <input type="number" placeholder="Monto de pago"   className="form-control m-2 " />
-               </div>
+                     <input type="number" 
+                     placeholder='¿Cuantos pagos se estan haciendo?'   
+                     className="form-control my-2"
+                     value={datos.pagos}
+                     name='pagos'
+                     onChange={(e) => setDatos({ ...datos, [e.target.name]: e.target.value })}
+                     />
+        
+                     <input type="number" placeholder="¿Con cuanto te estan pagando?"  
+                      className="form-control my-2 " 
+                      value={datos.monto}
+                      name='monto'
+                      onChange={(e) => setDatos({ ...datos, [e.target.name]: e.target.value })}
+                      />
+        
            
      
-   
+               <button className="btn btn-primary my-2 w-100"
+               onClick={CobrarAlumno}
+               >Cobrar</button>
                </div>
         </div>
       </div>
