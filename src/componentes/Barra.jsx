@@ -1,50 +1,43 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Offcanvas, Button, Accordion } from 'react-bootstrap';
+import { Accordion } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 import { useAuth } from '../BD/AuthContext';
 
 function Barra() {
-  const [show, setShow] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { currentUser } = useAuth();
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
   const handleNavigateToCobro = () => {
     navigate('/cobro');
-    handleClose();
   };
 
   const handleNavigateToNom = () => {
     navigate('/Home');
-    handleClose();
   };
 
   const handleNavigateToBusID = () => {
     navigate('/busID');
-    handleClose();
   };
 
   const handleNavigateToRegistro = () => {
     navigate('/registro');
-    handleClose();
   };
 
-
+  const handleNavigateToAdeudos = (tipo) => {
+    navigate('/adeudos', { state: { tipo } });
+  };
 
   const CerrarSesion = () => {
     const auth = getAuth();
     signOut(auth)
       .then(() => {
         navigate('/Login');
-        handleClose();
       })
       .catch((error) => {
-        // An error happened.
+        console.error('Error al cerrar sesión:', error);
       });
   };
 
@@ -54,110 +47,95 @@ function Barra() {
   }
 
   return (
-    <div>
-      <Button variant="primary m-3" onClick={handleShow}>
-        Menú
-      </Button>
+    <div className="bg-light border-end" style={{ width: '250px', minHeight: '100vh', position: 'fixed' }}>
+      <h4 className="text-center py-3">Menú</h4>
+      <ul className="list-group">
+        <li className="list-group-item" onClick={handleNavigateToRegistro}>
+          Registro
+        </li>
 
-      <Offcanvas show={show} onHide={handleClose}>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Menú</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <ul className="list-group">
-            <li className="list-group-item" onClick={handleNavigateToRegistro}>Registro</li>
+        <Accordion>
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>Pagos</Accordion.Header>
+            <Accordion.Body>
+              <ul className="list-group">
+                <li className="list-group-item" onClick={handleNavigateToBusID}>
+                  Colegiatura por ID
+                </li>
+                <li className="list-group-item" onClick={handleNavigateToNom}>
+                  Colegiatura por Nombre
+                </li>
+                <li className="list-group-item" onClick={handleNavigateToCobro}>
+                  Pago Extra
+                </li>
+              </ul>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
 
-            <Accordion>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header>Pagos</Accordion.Header>
-                <Accordion.Body>
-                  <ul className="list-group">
-                    <li className="list-group-item" onClick={handleNavigateToBusID}>
-                      Colegiatura por ID
-                    </li>
-                    <li className="list-group-item" onClick={handleNavigateToNom}>
-                      Colegiatura por Nombre
-                    </li>
-                    <li className="list-group-item" onClick={handleNavigateToCobro}>
-                      Pago Extra
-                    </li>
-                    <li className="list-group-item" >Ver Adeudos por Horario</li>
-                    <li className="list-group-item">Adeudos Generales</li>
-                   
-                  </ul>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
+        <Accordion>
+          <Accordion.Item eventKey="1">
+            <Accordion.Header>Adeudos</Accordion.Header>
+            <Accordion.Body>
+              <ul className="list-group">
+                <li className="list-group-item" onClick={() => handleNavigateToAdeudos('horario')}>
+                  Ver por horario
+                </li>
+                <li className="list-group-item" onClick={() => handleNavigateToAdeudos('general')}>
+                  Ver adeudos generales
+                </li>
+              </ul>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
 
-            <Accordion>
-              <Accordion.Item eventKey="1">
-                <Accordion.Header>Adeudos</Accordion.Header>
-                <Accordion.Body>
-                  <ul className="list-group">
-                    <li className="list-group-item">Ver por horario</li>
-                    <li className="list-group-item">Ver por profesor</li>
-                    <li className="list-group-item">Ver adeudos generales</li>
-                  </ul>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
+        <Accordion>
+          <Accordion.Item eventKey="2">
+            <Accordion.Header>Alumnos</Accordion.Header>
+            <Accordion.Body>
+              <ul className="list-group">
+                <li className="list-group-item">Modificar información</li>
+                <li className="list-group-item">Ver calificaciónes</li>
+                <li className="list-group-item">Cargar calificación</li>
+                <li className="list-group-item">Modificar calificación</li>
+              </ul>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
 
-            <Accordion>
-              <Accordion.Item eventKey="1">
-                <Accordion.Header>Alumnos</Accordion.Header>
-                <Accordion.Body>
-                  <ul className="list-group">
-                    <li className="list-group-item">Opción de Pago 1</li>
-                    <li className="list-group-item">Opción de Pago 2</li>
-                    <li className="list-group-item">Opción de Pago 3</li>
-                  </ul>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
+        <Accordion>
+          <Accordion.Item eventKey="3">
+            <Accordion.Header>Folios</Accordion.Header>
+            <Accordion.Body>
+              <ul className="list-group">
+                <li className="list-group-item">Opción de Pago 1</li>
+                <li className="list-group-item">Opción de Pago 2</li>
+                <li className="list-group-item">Opción de Pago 3</li>
+              </ul>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
 
+        <Accordion>
+          <Accordion.Item eventKey="4">
+            <Accordion.Header>Cortes</Accordion.Header>
+            <Accordion.Body>
+              <ul className="list-group">
+                <li className="list-group-item">Opción de Pago 1</li>
+                <li className="list-group-item">Opción de Pago 2</li>
+              </ul>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
 
-            <Accordion>
-              <Accordion.Item eventKey="">
-                <Accordion.Header>Folios</Accordion.Header>
-                <Accordion.Body>
-                  <ul className="list-group">
-                    <li className="list-group-item">Opción de Pago 1</li>
-                    <li className="list-group-item">Opción de Pago 2</li>
-                    <li className="list-group-item">Opción de Pago 3</li>
-                  </ul>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-
-            <Accordion>
-              <Accordion.Item eventKey="3">
-                <Accordion.Header>Cortes</Accordion.Header>
-                <Accordion.Body>
-                  <ul className="list-group">
-                    <li className="list-group-item">Opción de Pago 1</li>
-                    <li className="list-group-item">Opción de Pago 2</li>
-                  </ul>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-
-           <div className='my-5'>
-           <li className="list-group-item bg-success text-white my-2">
-              Comenzar Semana
-            </li>
-
-            <li className="list-group-item bg-danger text-white my-2" onClick={CerrarSesion}>
-              Cerrar Sesión
-            </li>
-
-           </div>
-
-       
-
-          </ul>
-        </Offcanvas.Body>
-      </Offcanvas>
-    </div>
+        <div className="my-5">
+          <li className="btn btn-success text-white my-2 w-100">Comenzar Semana</li>
+          <li className="btn btn-danger text-white my-2 w-100" onClick={CerrarSesion}>
+            Cerrar Sesión
+          </li>
+        </div>
+      </ul>
+    </div> 
   );
 }
 

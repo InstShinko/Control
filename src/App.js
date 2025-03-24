@@ -8,6 +8,7 @@ import Cobro from './paginas/Cobro';
 import BusID from './paginas/BusID';
 import Registro from './paginas/Registro';
 import Ticket from './paginas/Ticket';
+import Adeudos from './paginas/Adeudos';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/busID" element={<BusID />} />
             <Route path="/registro" element={<Registro />} />
             <Route path="/ticket" element={<Ticket />} />
+            <Route path="/adeudos" element={<Adeudos />} />
             <Route path="/" element={<Navigate to="/login" />} />
           </Routes>
         </Layout>
