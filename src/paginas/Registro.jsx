@@ -40,7 +40,7 @@ function Registro() {
     { value: "LIZETH ALVAREZ CABALLERO", label: "LIZETH ALVAREZ CABALLERO" },
     { value: "JPAOLA MONSERRATH ORTEGA SANCHEZ", label: "PAOLA MONSERRATH ORTEGA SANCHEZ" },
     { value: "SAUL JIMENEZ MERCADO", label: "SAUL JIMENEZ MERCADO" },
-    
+    { value: "PENDIENDTE", label: "PENDIENDTE" },
   ];
 
   const [datosAlumno, setDatosAlumno] = useState({

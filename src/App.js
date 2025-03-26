@@ -9,6 +9,8 @@ import BusID from './paginas/BusID';
 import Registro from './paginas/Registro';
 import Ticket from './paginas/Ticket';
 import Adeudos from './paginas/Adeudos';
+import Alumno from './paginas/Alumno';
+import Calificaciones from './paginas/Calificaciones';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
             <Route path="/registro" element={<Registro />} />
             <Route path="/ticket" element={<Ticket />} />
             <Route path="/adeudos" element={<Adeudos />} />
+            <Route path="/alumno" element={<Alumno />} />
+            <Route path="/cali" element={<Calificaciones/>} />
             <Route path="/" element={<Navigate to="/login" />} />
           </Routes>
         </Layout>

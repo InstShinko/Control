@@ -30,6 +30,11 @@ function Barra() {
     navigate('/adeudos', { state: { tipo } });
   };
 
+
+  const handleNavigateToAlumno = (tipo) => {
+    navigate('/alumno', { state: { tipo } });
+  };
+
   const CerrarSesion = () => {
     const auth = getAuth();
     signOut(auth)
@@ -94,10 +99,10 @@ function Barra() {
             <Accordion.Header>Alumnos</Accordion.Header>
             <Accordion.Body>
               <ul className="list-group">
-                <li className="list-group-item">Modificar información</li>
-                <li className="list-group-item">Ver calificaciónes</li>
-                <li className="list-group-item">Cargar calificación</li>
-                <li className="list-group-item">Modificar calificación</li>
+                <li className="list-group-item"  onClick={() => handleNavigateToAlumno('modi')}>Modificar información</li>
+                <li className="list-group-item"  onClick={() => handleNavigateToAlumno('ver')}>Ver calificaciónes</li>
+                <li className="list-group-item"  onClick={() => handleNavigateToAlumno('cargar')}>Cargar calificación</li>
+                <li className="list-group-item"  onClick={() => handleNavigateToAlumno('modicali')}>Modificar calificación</li>
               </ul>
             </Accordion.Body>
           </Accordion.Item>

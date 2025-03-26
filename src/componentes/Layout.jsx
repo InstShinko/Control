@@ -4,11 +4,16 @@ import Barra from './Barra';
 
 function Layout({ children }) {
   const location = useLocation();
+
+  // Rutas donde no se debe mostrar la barra
+  const rutasSinBarra = ['/login', '/ticket', '/cali'];
+
   return (
     <div style={styles.container}>
+      {/* Ocultar la barra si la ruta actual está en `rutasSinBarra` */}
+      {!rutasSinBarra.includes(location.pathname) && <Barra />}
       <div style={styles.content}>
-      {location.pathname !== '/login' && <Barra />}
-      {<main style={styles.main}>{children}</main>}
+        <main style={styles.main}>{children}</main>
       </div>
     </div>
   );
@@ -26,7 +31,6 @@ const styles = {
   },
   main: {
     flex: 1,
-
     backgroundColor: '#f9f9f9',
   },
 };
