@@ -35,6 +35,10 @@ function Barra() {
     navigate('/alumno', { state: { tipo } });
   };
 
+  const handleNavigateToFolio = (tipo) => {
+    navigate('/folios', { state: { tipo } });
+  };
+
   const CerrarSesion = () => {
     const auth = getAuth();
     signOut(auth)
@@ -113,9 +117,9 @@ function Barra() {
             <Accordion.Header>Folios</Accordion.Header>
             <Accordion.Body>
               <ul className="list-group">
-                <li className="list-group-item">Opción de Pago 1</li>
-                <li className="list-group-item">Opción de Pago 2</li>
-                <li className="list-group-item">Opción de Pago 3</li>
+                <li className="list-group-item" onClick={() => handleNavigateToFolio('fecha')}>Buscar por Fecha</li>
+                <li className="list-group-item" onClick={() => handleNavigateToFolio('idalumno')}>Buscar por Id del alumno</li>
+                <li className="list-group-item" onClick={() => handleNavigateToFolio('idfolio')}>Buscar por folio</li>
               </ul>
             </Accordion.Body>
           </Accordion.Item>

@@ -10,7 +10,7 @@ function Layout({ children }) {
 
   return (
     <div style={styles.container}>
-      {/* Ocultar la barra si la ruta actual está en `rutasSinBarra` */}
+  
       {!rutasSinBarra.includes(location.pathname) && <Barra />}
       <div style={styles.content}>
         <main style={styles.main}>{children}</main>

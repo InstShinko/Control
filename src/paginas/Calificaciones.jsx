@@ -78,7 +78,7 @@ const creditosList = creditosSnap.docs
       <div className='container'>
         <div className='d-flex flex-column align-items-center'>
           <img src={logoN} className='w-50' alt='logotipo' />
-          <h3>Calificaiones de Pago</h3>
+          <h3>Calificaciones de Pago</h3>
         </div>
 
         <div className='d-flex flex-row justify-content-end'>

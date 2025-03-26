@@ -262,7 +262,7 @@ function Alumno() {
 
 
     const vercali = async () => {
-      
+        
           const Calificaciones = `/cali?matricula=${encodeURIComponent(datosAlumno.id)}`;
   
           // Abrir la URL en una nueva pestaña

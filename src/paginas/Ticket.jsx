@@ -8,6 +8,29 @@ function Ticket() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
+  let fechacom; 
+
+  const hoy = new Date();
+
+  let day = hoy.getDate();
+  let month = hoy.getMonth() + 1;
+  let year = hoy.getFullYear();
+
+  if(month < 10){
+    if(day<10){
+      fechacom=year+"-0"+month+"-0"+day;
+    }else{
+      fechacom=year+"-0"+month+"-"+day;
+    }
+ }else{
+  if(day<10){
+    fechacom=year+"-"+month+"-0"+day;
+  }else{
+    fechacom=year+"-"+month+"-"+day;
+  }
+  }
+
+
   const datosAlumno = {
     matricula: searchParams.get('matricula'),
     nombre: searchParams.get('nombre'),
@@ -20,7 +43,7 @@ function Ticket() {
     pagos: searchParams.get('pagos'),
     semana: searchParams.get('semana'),
     concepto: searchParams.get('concepto'),
-    fecha: new Date().toLocaleDateString()
+    fecha: fechacom
   };
 
   const guardarFolioEnFirebase = async () => {
@@ -116,8 +139,6 @@ function Ticket() {
           <p><strong>Telefono:</strong> 771-489-70-33</p>
           <p><strong>RFC:</strong> GID030807AH1</p>
         </div>
-       
-         
             <div className="m-2 d-flex flex-row justify-content-center" align="center">
               <p><strong>Folio:</strong>{datosAlumno.folio} </p>
             </div>
@@ -125,8 +146,6 @@ function Ticket() {
             <p><strong>Nombre:</strong> {datosAlumno.nombre}</p>
             {renderTicketContent()}
             <p><strong>Fecha:</strong> {new Date().toLocaleDateString()}</p>
-        
-        
       </div>
     </div>
   );

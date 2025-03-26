@@ -7,6 +7,8 @@ import { db } from '../BD/firebase-config';
 function Adeudos() {
 
     const [deudores, setdeudores] = useState([]);
+    const [deudatotal, setdeudatotal]=useState(0);
+    const [deudatotalG, setdeudatotalG]=useState(0);
     const [deudoresG, setdeudoresG] = useState([]);
      const [horario, sethorario] = useState('');
     const location = useLocation();
@@ -32,6 +34,13 @@ function Adeudos() {
             horario: doc.data().Horario,
             profesor: doc.data().Profesor
           }));
+
+    // Calcular la suma total del campo "adeudo"
+    const sumaAdeudo = deudoresList.reduce((total, deudor) => total + deudor.adeudo, 0);
+    setdeudatotal(sumaAdeudo); // Actualizar el estado con la suma total
+
+
+
           setdeudores(deudoresList);
         }
       };
@@ -55,6 +64,12 @@ function Adeudos() {
             horario: doc.data().Horario,
             profesor: doc.data().Profesor
           }));
+
+  // Calcular la suma total del campo "adeudo"
+  const sumaAdeudo = deudoresList.reduce((total, deudor) => total + deudor.adeudo, 0);
+  setdeudatotalG(sumaAdeudo); // Actualizar el estado con la suma total
+
+
           setdeudoresG(deudoresList);
         }
       };
@@ -83,6 +98,8 @@ function Adeudos() {
                     <button className="btn btn-primary w-100" onClick={handleBuscarH}>Buscar</button>
                   </div>
         </div>
+
+        <h1><strong>Total:$</strong> {deudatotal}</h1>
 
         <table className="table">
                 <thead>
@@ -131,7 +148,7 @@ function Adeudos() {
               
               <button className="btn btn-primary w-100" onClick={handleBuscarG}>Ver Adeudos</button>
                   
- 
+              <h1><strong>Total:$</strong> {deudatotalG}</h1>
   
           <table className="table">
                   <thead>

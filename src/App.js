@@ -11,6 +11,7 @@ import Ticket from './paginas/Ticket';
 import Adeudos from './paginas/Adeudos';
 import Alumno from './paginas/Alumno';
 import Calificaciones from './paginas/Calificaciones';
+import Folios from './paginas/Folios';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/adeudos" element={<Adeudos />} />
             <Route path="/alumno" element={<Alumno />} />
             <Route path="/cali" element={<Calificaciones/>} />
+            <Route path="/folios" element={<Folios/>} />
             <Route path="/" element={<Navigate to="/login" />} />
           </Routes>
         </Layout>
