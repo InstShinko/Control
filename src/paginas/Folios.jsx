@@ -81,7 +81,7 @@ function Folios() {
               ))}
          
                 </tbody>
-             </table>
+        </table>
   
 
           </>

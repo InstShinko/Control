@@ -4,6 +4,8 @@ import { Accordion } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 import { useAuth } from '../BD/AuthContext';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../BD/firebase-config';
 
 function Barra() {
   const navigate = useNavigate();
@@ -39,6 +41,10 @@ function Barra() {
     navigate('/folios', { state: { tipo } });
   };
 
+  const handleNavigateToCorte = (tipo) => {
+    navigate('/cortes', { state: { tipo } });
+  };
+
   const CerrarSesion = () => {
     const auth = getAuth();
     signOut(auth)
@@ -49,6 +55,55 @@ function Barra() {
         console.error('Error al cerrar sesión:', error);
       });
   };
+
+  const calcularTotalDelDia = async () => {
+    try {
+
+      let fechaActual; 
+
+      const hoy = new Date();
+    
+      let day = hoy.getDate();
+      let month = hoy.getMonth() + 1;
+      let year = hoy.getFullYear();
+    
+      if(month < 10){
+        if(day<10){
+          fechaActual=year+"-0"+month+"-0"+day;
+        }else{
+          fechaActual=year+"-0"+month+"-"+day;
+        }
+     }else{
+      if(day<10){
+        fechaActual=year+"-"+month+"-0"+day;
+      }else{
+        fechaActual=year+"-"+month+"-"+day;
+      }
+      }
+
+      // Crear la consulta para filtrar por la fecha actual
+      const q = query(
+        collection(db, 'Folios'),
+        where('Fecha', '==', fechaActual)
+      );
+  
+      // Ejecutar la consulta
+      const querySnapshot = await getDocs(q);
+  
+      // Calcular la suma total del campo "Monto"
+      let sumaTotal = 0;
+      querySnapshot.forEach((doc) => {
+        sumaTotal += doc.data().Monto || 0; // Asegurarse de que Monto no sea undefined
+      });
+  
+      // Mostrar el total en un alert
+      alert(`Hoy se lleva cobrado: $${sumaTotal}`);
+    } catch (error) {
+      console.error('Error al calcular el total del día:', error);
+      alert('Hubo un error al calcular el total del día.');
+    }
+  };
+
 
   // Condicionar el renderizado de la barra basado en la ruta actual
   if (!currentUser || location.pathname === '/ticket') {
@@ -130,8 +185,8 @@ function Barra() {
             <Accordion.Header>Cortes</Accordion.Header>
             <Accordion.Body>
               <ul className="list-group">
-                <li className="list-group-item">Opción de Pago 1</li>
-                <li className="list-group-item">Opción de Pago 2</li>
+                <li className="list-group-item" onClick={calcularTotalDelDia}>Rápido</li>
+                <li className="list-group-item" onClick={() =>handleNavigateToCorte('fecha')}>Por Fecha</li>
               </ul>
             </Accordion.Body>
           </Accordion.Item>

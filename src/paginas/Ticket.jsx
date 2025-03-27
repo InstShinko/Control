@@ -60,7 +60,7 @@ function Ticket() {
           Folio: datosAlumno.folio,
           Matricula: datosAlumno.matricula,
           Nombre: datosAlumno.nombre,
-          Monto: parseFloat(datosAlumno.monto),
+          Monto: parseFloat(datosAlumno.pago),
           Cambio: parseFloat(datosAlumno.cambio),
           Concepto: datosAlumno.concepto,
         

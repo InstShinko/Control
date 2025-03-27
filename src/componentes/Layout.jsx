@@ -6,7 +6,7 @@ function Layout({ children }) {
   const location = useLocation();
 
   // Rutas donde no se debe mostrar la barra
-  const rutasSinBarra = ['/login', '/ticket', '/cali'];
+  const rutasSinBarra = ['/login', '/ticket', '/cali', '/cobranza'];
 
   return (
     <div style={styles.container}>

@@ -12,6 +12,8 @@ import Adeudos from './paginas/Adeudos';
 import Alumno from './paginas/Alumno';
 import Calificaciones from './paginas/Calificaciones';
 import Folios from './paginas/Folios';
+import Cortes from './paginas/Cortes';
+import Cobranza from './paginas/Cobranza';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
             <Route path="/alumno" element={<Alumno />} />
             <Route path="/cali" element={<Calificaciones/>} />
             <Route path="/folios" element={<Folios/>} />
+            <Route path="/cortes" element={<Cortes/>} />
+            <Route path="/cobranza" element={<Cobranza/>} />
             <Route path="/" element={<Navigate to="/login" />} />
           </Routes>
         </Layout>
