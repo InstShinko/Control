@@ -261,14 +261,21 @@ function Alumno() {
   };
 
 
-    const vercali = async () => {
-        
-          const Calificaciones = `/cali?matricula=${encodeURIComponent(datosAlumno.id)}`;
+  const vercali = async () => {
+    try {
+      // Obtener la URL base de la aplicación
+      const baseUrl = `${window.location.origin}/Control`; // Incluye el basename configurado en BrowserRouter
   
-          // Abrir la URL en una nueva pestaña
-          window.open(Calificaciones, '_blank');
+      // Construir la URL completa con el parámetro de matrícula
+      const Calificaciones = `${baseUrl}/cali?matricula=${encodeURIComponent(datosAlumno.id)}`;
   
-    };
+      // Abrir la URL en una nueva pestaña
+      window.open(Calificaciones, '_blank');
+    } catch (error) {
+      console.error('Error al abrir la página de calificaciones:', error);
+      alert('Hubo un error al abrir la página de calificaciones.');
+    }
+  };
 
     const updatecali = async () => {
       if (!datosAlumno.id || !datosAlumno.idcali || !datosAlumno.calificacion) {

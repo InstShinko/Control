@@ -46,33 +46,31 @@ function Cobro() {
 
   const CobrarAlumno = async () => {
     try {
-
       // Obtener el folio actual desde Firebase
-       const matriculaDoc = await getDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'));
+      const matriculaDoc = await getDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'));
       if (matriculaDoc.exists()) {
-
         let folioActual = matriculaDoc.data().Folio;
-
+  
         folioActual = parseInt(folioActual);
-
-        // Incrementar  el folio
-
+  
+        // Incrementar el folio
         const nuevoFolio = folioActual + 1;
-
-        setDatos.monto=parseFloat(datos.monto);
-        setDatos.pago=parseFloat(datos.pago);      
-
-       const cambio= datos.monto - datos.pago ;
-
-       const concepto= datos.semana;
-
+  
+        setDatos.monto = parseFloat(datos.monto);
+        setDatos.pago = parseFloat(datos.pago);
+  
+        const cambio = datos.monto - datos.pago;
+  
+        const concepto = datos.semana;
+  
+        // Obtener la URL base de la aplicación
+        const baseUrl = `${window.location.origin}/Control`; // Incluye el basename configurado en BrowserRouter
+  
         // Crear una URL con los datos del alumno y el tipo de ticket
-        const ticketUrl = `/ticket?matricula=${encodeURIComponent(datos.id)}&nombre=${encodeURIComponent(datos.nombre)}&curso=${encodeURIComponent(datos.curso)}&tipo=pagoExtra&concepto=${concepto}&tipo=pagoExtra&folio=${nuevoFolio}&monto=${encodeURIComponent(datos.monto)}&pago=${encodeURIComponent(datos.pago)}&cambio=${cambio}&semana=${encodeURIComponent(datos.semana)}`;
-
+        const ticketUrl = `${baseUrl}/ticket?matricula=${encodeURIComponent(datos.id)}&nombre=${encodeURIComponent(datos.nombre)}&curso=${encodeURIComponent(datos.curso)}&tipo=pagoExtra&concepto=${concepto}&folio=${nuevoFolio}&monto=${encodeURIComponent(datos.monto)}&pago=${encodeURIComponent(datos.pago)}&cambio=${cambio}&semana=${encodeURIComponent(datos.semana)}`;
+  
         // Abrir la URL en una nueva pestaña
         window.open(ticketUrl, '_blank');
-
-       
       } else {
         alert('No se encontró la matrícula actual');
       }
@@ -81,7 +79,6 @@ function Cobro() {
       alert('Error al registrar el alumno');
     }
   };
-
 
 
   return (

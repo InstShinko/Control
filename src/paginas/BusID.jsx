@@ -96,9 +96,12 @@ function BusID() {
 
           const concepto= 'Colegiatura';
 
+        // Obtener la URL base de la aplicación
+        const baseUrl = `${window.location.origin}/Control`; // Incluye el basename configurado en BrowserRouter
+  
         // Crear una URL con los datos del alumno y el tipo de ticket
-        const ticketUrl = `/ticket?matricula=${encodeURIComponent(datos.id)}&nombre=${encodeURIComponent(datos.nombre)}&curso=${encodeURIComponent(datos.curso)}&tipo=colegiatura&folio=${nuevoFolio}&concepto=${concepto}&monto=${encodeURIComponent(datos.monto)}&pago=${encodeURIComponent(datos.pago)}&cambio=${cambio}&semana=${encodeURIComponent(datos.semana)}&pagos=${encodeURIComponent(datos.pagos)}`;
-
+        const ticketUrl = `${baseUrl}/ticket?matricula=${encodeURIComponent(datos.id)}&nombre=${encodeURIComponent(datos.nombre)}&curso=${encodeURIComponent(datos.curso)}&tipo=colegiatura&folio=${nuevoFolio}&concepto=${concepto}&monto=${encodeURIComponent(datos.monto)}&pago=${encodeURIComponent(datos.pago)}&cambio=${cambio}&semana=${encodeURIComponent(datos.semana)}&pagos=${encodeURIComponent(datos.pagos)}`;
+  
         // Abrir la URL en una nueva pestaña
         window.open(ticketUrl, '_blank');
 

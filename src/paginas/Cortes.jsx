@@ -7,13 +7,15 @@ function Cortes() {
 const [fecha, setfecha] = useState('');
 
 const vercortefecha = () => {
-        
-  const Desfecha = `/cobranza?fecha=${encodeURIComponent(fecha)}`;
-  
+  // Obtener la URL base de la aplicación
+  const baseUrl = `${window.location.origin}/Control`; // Incluye el basename configurado en BrowserRouter
+
+  // Construir la URL completa con el parámetro de fecha
+  const Desfecha = `${baseUrl}/cobranza?fecha=${encodeURIComponent(fecha)}`;
+
   // Abrir la URL en una nueva pestaña
   window.open(Desfecha, '_blank');
-  
-    };
+};
 
 
 
