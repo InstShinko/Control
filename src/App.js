@@ -18,7 +18,7 @@ import Cobranza from './paginas/Cobranza';
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/Control">
         <Layout>
           <Routes>
             <Route path="/login" element={<Login />} />
