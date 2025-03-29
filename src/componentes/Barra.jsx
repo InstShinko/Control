@@ -4,7 +4,7 @@ import { Accordion } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 import { useAuth } from '../BD/AuthContext';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where, updateDoc } from 'firebase/firestore';
 import { db } from '../BD/firebase-config';
 
 function Barra() {
@@ -104,6 +104,68 @@ function Barra() {
     }
   };
 
+  const aumentardeuda = async () => {
+    try {
+      // Mostrar un cuadro de confirmación
+      const confirmacion = window.confirm('¿Estás seguro de que deseas aumentar la deuda de todos los alumnos activos en 1?');
+      if (!confirmacion) {
+        return; // Salir de la función si el usuario cancela
+      }
+  
+      // Crear una consulta para obtener solo los documentos con Estado "Activo"
+      const alumnosRef = collection(db, 'Alumnos');
+      const q = query(alumnosRef, where('Estado', '==', 'Activo'));
+      const querySnapshot = await getDocs(q);
+  
+      // Iterar sobre cada documento y aumentar el valor de "Deuda" en 1
+      querySnapshot.forEach(async (doc) => {
+        const deudaActual = doc.data().Deuda || 0; // Asegurarse de que "Deuda" no sea undefined
+        const alumnoRef = doc.ref; // Referencia al documento actual
+  
+        // Actualizar el campo "Deuda"
+        await updateDoc(alumnoRef, {
+          Deuda: deudaActual + 1,
+        });
+      });
+  
+      alert('Se ha iniciado la semana correctamente');
+    } catch (error) {
+      console.error('Error al aumentar la deuda:', error);
+      alert('Hubo un error al aumentar la deuda.');
+    }
+  };
+
+
+  const reducirdeuda = async () => {
+    try {
+      // Mostrar un cuadro de confirmación
+      const confirmacion = window.confirm('¿Estás seguro de que deseas reducir la deuda, ocupalo solo en caso de haber puesto una semana adicional por error?');
+      if (!confirmacion) {
+        return; // Salir de la función si el usuario cancela
+      }
+  
+      // Crear una consulta para obtener solo los documentos con Estado "Activo"
+      const alumnosRef = collection(db, 'Alumnos');
+      const q = query(alumnosRef, where('Estado', '==', 'Activo'));
+      const querySnapshot = await getDocs(q);
+  
+      // Iterar sobre cada documento y reducir el valor de "Deuda" en 1
+      querySnapshot.forEach(async (doc) => {
+        const deudaActual = doc.data().Deuda || 0; // Asegurarse de que "Deuda" no sea undefined
+        const alumnoRef = doc.ref; // Referencia al documento actual
+  
+        // Actualizar el campo "Deuda"
+        await updateDoc(alumnoRef, {
+          Deuda: deudaActual - 1,
+        });
+      });
+  
+      alert('Se ha reducido la deuda de todos los alumnos activos en 1.');
+    } catch (error) {
+      console.error('Error al reducir la deuda:', error);
+      alert('Hubo un error al reducir la deuda.');
+    }
+  };
 
   // Condicionar el renderizado de la barra basado en la ruta actual
   if (!currentUser || location.pathname === '/ticket') {
@@ -192,8 +254,21 @@ function Barra() {
           </Accordion.Item>
         </Accordion>
 
+
+        <Accordion>
+          <Accordion.Item eventKey="5">
+            <Accordion.Header>Semana</Accordion.Header>
+            <Accordion.Body>
+              <ul className="list-group">
+                <li className="list-group-item" onClick={aumentardeuda}>Comenzar Semana</li>
+                <li className="list-group-item" onClick={reducirdeuda}>Reducir</li>
+              </ul>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+
         <div className="my-5">
-          <li className="btn btn-success text-white my-2 w-100">Comenzar Semana</li>
+
           <li className="btn btn-danger text-white my-2 w-100" onClick={CerrarSesion}>
             Cerrar Sesión
           </li>
