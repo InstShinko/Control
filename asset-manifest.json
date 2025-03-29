@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/Control/static/css/main.9fe40f7c.css",
+    "main.js": "/Control/static/js/main.72a2a73b.js",
+    "static/js/488.ebf51bc2.chunk.js": "/Control/static/js/488.ebf51bc2.chunk.js",
+    "static/media/logo.png": "/Control/static/media/logo.1024744905d85c4e7464.png",
+    "static/media/Vnegro.png": "/Control/static/media/Vnegro.ab19feac0a9d5e38e15f.png",
+    "index.html": "/Control/index.html",
+    "main.9fe40f7c.css.map": "/Control/static/css/main.9fe40f7c.css.map",
+    "main.72a2a73b.js.map": "/Control/static/js/main.72a2a73b.js.map",
+    "488.ebf51bc2.chunk.js.map": "/Control/static/js/488.ebf51bc2.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9fe40f7c.css",
+    "static/js/main.72a2a73b.js"
+  ]
+}
