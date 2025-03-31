@@ -267,9 +267,8 @@ function Alumno() {
       const baseUrl = `${window.location.origin}/Control`; // Incluye el basename configurado en BrowserRouter
   
       // Construir la URL completa con el parámetro de matrícula
-      const Calificaciones = `${baseUrl}/cali`;
-
-      localStorage.setItem("ID", datosAlumno.id);
+      const Calificaciones = `${baseUrl}/cali?matricula=${encodeURIComponent(datosAlumno.id)}`;
+  
       // Abrir la URL en una nueva pestaña
       window.open(Calificaciones, '_blank');
     } catch (error) {

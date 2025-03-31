@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import logoN from '../Vnegro.png';
-
+import { useLocation } from 'react-router-dom';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../BD/firebase-config';
 
 function Calificaciones() {
- 
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
      const [califis, setcalifis] = useState([]);
-  const mat = localStorage.getItem("ID");
+  const mat = {
+    matricula: searchParams.get('matricula'),
+  };
 
 
 
@@ -21,13 +24,13 @@ function Calificaciones() {
   // Función para recuperar los datos del alumno y su subcolección Creditos
   const obtenerDatosAlumno = async () => {
     try {
-      if (!mat) {
+      if (!mat.matricula) {
         alert('No se proporcionó una matrícula válida.');
         return;
       }
 
       // Referencia al documento del alumno
-      const alumnoRef = doc(db, 'Alumnos', mat);
+      const alumnoRef = doc(db, 'Alumnos', mat.matricula);
       const alumnoSnap = await getDoc(alumnoRef);
 
       if (alumnoSnap.exists()) {
@@ -40,7 +43,7 @@ function Calificaciones() {
         });
 
         // Referencia a la subcolección Creditos
-        const creditosRef = collection(db, 'Alumnos', mat, 'Creditos');
+        const creditosRef = collection(db, 'Alumnos', mat.matricula, 'Creditos');
         const creditosSnap = await getDocs(creditosRef);
 
  // Mapear los datos de la subcolección Creditos y ordenarlos alfabéticamente por materia
