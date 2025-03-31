@@ -4,9 +4,12 @@ import Select from 'react-select';
 import { useLocation } from 'react-router-dom';
 import {doc, getDoc, updateDoc, collection, addDoc, getDocs} from 'firebase/firestore';
 import { db } from '../BD/firebase-config';
+import { useNavigate } from 'react-router-dom';
 
 
 function Alumno() {
+
+  const navigate = useNavigate();
 
       const [datosAlumno, setDatosAlumno] = useState({
         id:'',
@@ -261,20 +264,16 @@ function Alumno() {
   };
 
 
-  const vercali = async () => {
-    try {
-      // Obtener la URL base de la aplicación
-      const baseUrl = `${window.location.origin}/Control`; // Incluye el basename configurado en BrowserRouter
+  const vercali = () => {
+
   
-      // Construir la URL completa con el parámetro de matrícula
-      const Calificaciones = `${baseUrl}/cali?matricula=${encodeURIComponent(datosAlumno.id)}`;
-  
-      // Abrir la URL en una nueva pestaña
-      window.open(Calificaciones, '_blank');
-    } catch (error) {
-      console.error('Error al abrir la página de calificaciones:', error);
-      alert('Hubo un error al abrir la página de calificaciones.');
+    if (!datosAlumno.id) {
+      alert('Por favor, ingresa un ID válido.');
+      return;
     }
+  
+    // Navegar a la página Calificaciones con el parámetro de matrícula
+    navigate(`/cali?matricula=${encodeURIComponent(datosAlumno.id)}`);
   };
 
     const updatecali = async () => {
