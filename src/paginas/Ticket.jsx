@@ -136,12 +136,13 @@ function Ticket() {
           <h3>Recibo de Pago</h3>
         </div>
         <div className='d-flex flex-column justify-content-center'>
-          <p><strong>Dirección: Av. Madero 203D, Colonia Centro, Pachuca Hidalgo, Cp:42000</strong></p>
+          <p><strong>Dirección: Av. Madero 203D, Colonia Centro,</strong></p>
+          <p><strong>Pachuca Hidalgo, Cp:42000</strong></p>
           <p><strong>Telefono: 771-489-70-33</strong></p>
           <p><strong>RFC: GID030807AH1</strong></p>
         </div>
             <div className="m-2 d-flex flex-row justify-content-center" align="center">
-              <p><strong>Folio:</strong>{datosAlumno.folio} </p>
+              <p><strong>Folio:{datosAlumno.folio}</strong> </p>
             </div>
             <p><strong>Matrícula: {datosAlumno.matricula}</strong></p>
             <p><strong>Nombre: {datosAlumno.nombre}</strong></p>
