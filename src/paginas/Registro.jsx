@@ -3,10 +3,12 @@ import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../BD/firebase-config';
+import { useNavigate } from 'react-router-dom'; // Asegúrate de importar useNavigate
 
 
 function Registro() {
 
+  const navigate = useNavigate();
 
   const cursos = [
     { value: "Diseño Grafico Shinko", label: "Diseño Grafico Shinko" },
@@ -77,64 +79,62 @@ function Registro() {
     }));
   };
 
-  const handleRegistrarAlumno = async () => {
-    try {
-      // Obtener la matrícula y el folio actual desde Firebase
-      const matriculaDoc = await getDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'));
-      if (matriculaDoc.exists()) {
-        let matriculaActual = matriculaDoc.data().NumMatricula;
-        let folioActual = matriculaDoc.data().Folio;
+
+    const handleRegistrarAlumno = async () => {
+      try {
+        // Obtener la matrícula y el folio actual desde Firebase
+        const matriculaDoc = await getDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'));
+        if (matriculaDoc.exists()) {
+          let matriculaActual = matriculaDoc.data().NumMatricula;
+          let folioActual = matriculaDoc.data().Folio;
   
-        matriculaActual = parseInt(matriculaActual);
-        folioActual = parseInt(folioActual);
+          matriculaActual = parseInt(matriculaActual);
+          folioActual = parseInt(folioActual);
   
-        // Incrementar la matrícula y el folio
-        const nuevaMatricula = matriculaActual + 1;
-        const nuevoFolio = folioActual + 1;
+          // Incrementar la matrícula y el folio
+          const nuevaMatricula = matriculaActual + 1;
+          const nuevoFolio = folioActual + 1;
   
-        const cambio = datosAlumno.pago - datosAlumno.monto;
+          const cambio = datosAlumno.pago - datosAlumno.monto;
   
-        // Registrar el nuevo alumno en la colección Alumnos
-        await setDoc(doc(db, 'Alumnos', nuevaMatricula.toString()), {
-          Nombre: datosAlumno.nombre,
-          Telefono: datosAlumno.telefono,
-          Direccion: datosAlumno.direccion,
-          Correo: datosAlumno.correo,
-          Curso: datosAlumno.curso,
-          Horario: datosAlumno.horario,
-          Colegiatura: parseInt(datosAlumno.colegiatura),
-          Estado: "Activo",
-          Deuda: 1,
-          FechaR: new Date().toLocaleDateString(),
-          Inscrito: datosAlumno.asesor,
-          Promedio: 0,
-          Profesor: datosAlumno.profesor
-        });
+          // Registrar el nuevo alumno en la colección Alumnos
+          await setDoc(doc(db, 'Alumnos', nuevaMatricula.toString()), {
+            Nombre: datosAlumno.nombre,
+            Telefono: datosAlumno.telefono,
+            Direccion: datosAlumno.direccion,
+            Correo: datosAlumno.correo,
+            Curso: datosAlumno.curso,
+            Horario: datosAlumno.horario,
+            Colegiatura: parseInt(datosAlumno.colegiatura),
+            Estado: "Activo",
+            Deuda: 1,
+            FechaR: new Date().toLocaleDateString(),
+            Inscrito: datosAlumno.asesor,
+            Promedio: 0,
+            Profesor: datosAlumno.profesor
+          });
   
-        // Actualizar la matrícula y el folio en Firebase
-        await updateDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'), {
-          NumMatricula: nuevaMatricula,
-          Folio: nuevoFolio
-        });
+          // Actualizar la matrícula y el folio en Firebase
+          await updateDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'), {
+            NumMatricula: nuevaMatricula,
+            Folio: nuevoFolio
+          });
   
-        const concepto = 'Inscripción';
+          const concepto = 'Inscripción';
   
-        // Obtener la URL base de la aplicación
-        const baseUrl = `${window.location.origin}/Control`; // Incluye el basename configurado en BrowserRouter
-  
-        // Crear una URL con los datos del alumno y el tipo de ticket
-        const ticketUrl = `${baseUrl}/ticket?matricula=${nuevaMatricula}&nombre=${encodeURIComponent(datosAlumno.nombre)}&telefono=${encodeURIComponent(datosAlumno.telefono)}&direccion=${encodeURIComponent(datosAlumno.direccion)}&correo=${encodeURIComponent(datosAlumno.correo)}&curso=${encodeURIComponent(datosAlumno.curso)}&horario=${encodeURIComponent(datosAlumno.horario)}&colegiatura=${encodeURIComponent(datosAlumno.colegiatura)}&asesor=${encodeURIComponent(datosAlumno.asesor)}&tipo=inscripcion&folio=${nuevoFolio}&concepto=${concepto}&monto=${datosAlumno.monto}&pago=${datosAlumno.pago}&cambio=${cambio}`;
-  
-        // Abrir la URL en una nueva pestaña
-        window.open(ticketUrl, '_blank');
-      } else {
-        alert('No se encontró la matrícula actual');
+          // Redirigir a la página de ticket con los datos del alumno
+          navigate(`/ticket?matricula=${nuevaMatricula}&nombre=${encodeURIComponent(datosAlumno.nombre)}&telefono=${encodeURIComponent(datosAlumno.telefono)}&direccion=${encodeURIComponent(datosAlumno.direccion)}&correo=${encodeURIComponent(datosAlumno.correo)}&curso=${encodeURIComponent(datosAlumno.curso)}&horario=${encodeURIComponent(datosAlumno.horario)}&colegiatura=${encodeURIComponent(datosAlumno.colegiatura)}&asesor=${encodeURIComponent(datosAlumno.asesor)}&tipo=inscripcion&folio=${nuevoFolio}&concepto=${concepto}&monto=${datosAlumno.monto}&pago=${datosAlumno.pago}&cambio=${cambio}`);
+        } else {
+          alert('No se encontró la matrícula actual');
+        }
+      } catch (error) {
+        console.error('Error al registrar el alumno:', error);
+        alert('Error al registrar el alumno');
       }
-    } catch (error) {
-      console.error('Error al registrar el alumno:', error);
-      alert('Error al registrar el alumno');
-    }
-  };
+    };
+  
+    // Resto del componente...
+  
 
   return (
     <div className='container-fluid bg-dark text-white p-4' style={{ minHeight: '100vh' }}>

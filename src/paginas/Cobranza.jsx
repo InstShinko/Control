@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import logoN from '../Vnegro.png';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom'; // Importa useNavigate
 import { query, where, collection, getDocs } from 'firebase/firestore';
 import { db } from '../BD/firebase-config';
 
 function Cobranza() {
+  const navigate = useNavigate(); // Hook para navegar entre páginas
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
@@ -102,6 +103,15 @@ function Cobranza() {
         </table>
       
         
+        {/* Botón de regreso */}
+        <div className="d-flex justify-content-center mt-4">
+          <button
+            className="btn btn-secondary"
+            onClick={() => navigate(-1)} // Navega a la página anterior
+          >
+            Regresar
+          </button>
+        </div>
       </div>
     </div>
   );

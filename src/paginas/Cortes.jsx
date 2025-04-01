@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 
 function Cortes() {
 
 
 const [fecha, setfecha] = useState('');
 
+
+const navigate = useNavigate(); // Hook para manejar la navegación
+  
 const vercortefecha = () => {
-  // Obtener la URL base de la aplicación
-  const baseUrl = `${window.location.origin}/Control`; // Incluye el basename configurado en BrowserRouter
+  if (!fecha) {
+    alert('Por favor, selecciona una fecha válida.');
+    return;
+  }
 
-  // Construir la URL completa con el parámetro de fecha
-  const Desfecha = `${baseUrl}/cobranza?fecha=${encodeURIComponent(fecha)}`;
-
-  // Abrir la URL en una nueva pestaña
-  window.open(Desfecha, '_blank');
+  // Redirigir a la página de cobranza con el parámetro de fecha
+  navigate(`/cobranza?fecha=${encodeURIComponent(fecha)}`);
 };
 
 

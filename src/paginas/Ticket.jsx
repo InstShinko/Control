@@ -1,10 +1,11 @@
 import React from 'react';
 import logoN from '../Vnegro.png';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom'; // Importa useNavigate
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../BD/firebase-config';
 
 function Ticket() {
+  const navigate = useNavigate(); // Hook para navegar entre páginas
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
@@ -146,6 +147,15 @@ function Ticket() {
             <p><strong>Nombre:</strong> {datosAlumno.nombre}</p>
             {renderTicketContent()}
             <p><strong>Fecha:</strong> {new Date().toLocaleDateString()}</p>
+                    {/* Botón de regreso */}
+        <div className="d-flex justify-content-center mt-4">
+          <button
+            className="btn btn-secondary"
+            onClick={() => navigate(-1)} // Navega a la página anterior
+          >
+            Regresar
+          </button>
+        </div>
       </div>
     </div>
   );

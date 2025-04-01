@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { useNavigate } from 'react-router-dom'; // Asegúrate de importar useNavigate
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from '../BD/firebase-config';
 
 function BusID() {
-  
+
+ const navigate = useNavigate(); // Hook para manejar la navegación 
+ 
  const [alumno, setAlumno] = useState('');
 
   const [datos, setDatos] = useState(
@@ -49,69 +51,56 @@ function BusID() {
 
   const CobrarAlumno = async () => {
     try {
-
       // Obtener el folio actual desde Firebase
-       const matriculaDoc = await getDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'));
+      const matriculaDoc = await getDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'));
       if (matriculaDoc.exists()) {
-
         let folioActual = matriculaDoc.data().Folio;
 
         folioActual = parseInt(folioActual);
 
-        // Incrementar  el folio
-
+        // Incrementar el folio
         const nuevoFolio = folioActual + 1;
 
-        setDatos.pagos=parseInt(datos.pagos);
-        setDatos.monto=parseFloat(datos.monto);
-        setDatos.pago=parseFloat(datos.pago);      
+        setDatos.pagos = parseInt(datos.pagos);
+        setDatos.monto = parseFloat(datos.monto);
+        setDatos.pago = parseFloat(datos.pago);
 
-       const cambio= datos.monto - (datos.pago * datos.pagos);
+        const cambio = datos.monto - datos.pago * datos.pagos;
 
+        // Actualizar la deuda del alumno
+        const alumnoDocRef = doc(db, 'Alumnos', datos.id); // `datos.id` es la matrícula del alumno
+        const alumnoDoc = await getDoc(alumnoDocRef);
 
-          // Actualizar la deuda del alumno
-          const alumnoDocRef = doc(db, 'Alumnos', datos.id); // `datos.id` es la matrícula del alumno
-          const alumnoDoc = await getDoc(alumnoDocRef);
-    
-          if (alumnoDoc.exists()) {
-            const deudaActual = alumnoDoc.data().Deuda;
-    
-            // Restar 1 a la deuda
-            const nuevaDeuda = deudaActual - datos.pagos;
-    
-            // Asegurarse de que la deuda no sea negativa
-            await updateDoc(alumnoDocRef, {
-              Deuda: nuevaDeuda
-            });
-    
-            console.log(`Deuda actualizada: ${nuevaDeuda}`);
-          } else {
-            console.error('No se encontró el documento del alumno');
-            alert('No se encontró el alumno en la base de datos');
-            return;
-          }
-      
+        if (alumnoDoc.exists()) {
+          const deudaActual = alumnoDoc.data().Deuda;
 
+          // Restar los pagos realizados a la deuda
+          const nuevaDeuda = deudaActual - datos.pagos;
 
+          // Asegurarse de que la deuda no sea negativa
+          await updateDoc(alumnoDocRef, {
+            Deuda: nuevaDeuda
+          });
 
-          const concepto= 'Colegiatura';
+          console.log(`Deuda actualizada: ${nuevaDeuda}`);
+        } else {
+          console.error('No se encontró el documento del alumno');
+          alert('No se encontró el alumno en la base de datos');
+          return;
+        }
 
-        // Obtener la URL base de la aplicación
-        const baseUrl = `${window.location.origin}/Control`; // Incluye el basename configurado en BrowserRouter
-  
-        // Crear una URL con los datos del alumno y el tipo de ticket
-        const ticketUrl = `${baseUrl}/ticket?matricula=${encodeURIComponent(datos.id)}&nombre=${encodeURIComponent(datos.nombre)}&curso=${encodeURIComponent(datos.curso)}&tipo=colegiatura&folio=${nuevoFolio}&concepto=${concepto}&monto=${encodeURIComponent(datos.monto)}&pago=${encodeURIComponent(datos.pago)}&cambio=${cambio}&semana=${encodeURIComponent(datos.semana)}&pagos=${encodeURIComponent(datos.pagos)}`;
-  
-        // Abrir la URL en una nueva pestaña
-        window.open(ticketUrl, '_blank');
+        const concepto = 'Colegiatura';
 
-       
+        // Redirigir a la página de ticket con los datos del cobro
+        navigate(
+          `/ticket?matricula=${encodeURIComponent(datos.id)}&nombre=${encodeURIComponent(datos.nombre)}&curso=${encodeURIComponent(datos.curso)}&tipo=colegiatura&folio=${nuevoFolio}&concepto=${concepto}&monto=${encodeURIComponent(datos.monto)}&pago=${encodeURIComponent(datos.pago)}&cambio=${cambio}&semana=${encodeURIComponent(datos.semana)}&pagos=${encodeURIComponent(datos.pagos)}`
+        );
       } else {
         alert('No se encontró la matrícula actual');
       }
     } catch (error) {
-      console.error('Error al registrar el alumno:', error);
-      alert('Error al registrar el alumno');
+      console.error('Error al registrar el cobro:', error);
+      alert('Error al registrar el cobro');
     }
   };
 

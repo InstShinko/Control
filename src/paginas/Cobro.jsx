@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { useNavigate } from 'react-router-dom'; // Asegúrate de importar useNavigate
 import { doc, getDoc} from "firebase/firestore";
 import { db } from '../BD/firebase-config';
 
 function Cobro() {
+  const navigate = useNavigate(); // Hook para manejar la navegación
+
   
  const [alumno, setAlumno] = useState('');
 
@@ -50,36 +52,31 @@ function Cobro() {
       const matriculaDoc = await getDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'));
       if (matriculaDoc.exists()) {
         let folioActual = matriculaDoc.data().Folio;
-  
+
         folioActual = parseInt(folioActual);
-  
+
         // Incrementar el folio
         const nuevoFolio = folioActual + 1;
-  
+
         setDatos.monto = parseFloat(datos.monto);
         setDatos.pago = parseFloat(datos.pago);
-  
+
         const cambio = datos.monto - datos.pago;
-  
+
         const concepto = datos.semana;
-  
-        // Obtener la URL base de la aplicación
-        const baseUrl = `${window.location.origin}/Control`; // Incluye el basename configurado en BrowserRouter
-  
-        // Crear una URL con los datos del alumno y el tipo de ticket
-        const ticketUrl = `${baseUrl}/ticket?matricula=${encodeURIComponent(datos.id)}&nombre=${encodeURIComponent(datos.nombre)}&curso=${encodeURIComponent(datos.curso)}&tipo=pagoExtra&concepto=${concepto}&folio=${nuevoFolio}&monto=${encodeURIComponent(datos.monto)}&pago=${encodeURIComponent(datos.pago)}&cambio=${cambio}&semana=${encodeURIComponent(datos.semana)}`;
-  
-        // Abrir la URL en una nueva pestaña
-        window.open(ticketUrl, '_blank');
+
+        // Redirigir a la página de ticket con los datos del cobro
+        navigate(
+          `/ticket?matricula=${encodeURIComponent(datos.id)}&nombre=${encodeURIComponent(datos.nombre)}&curso=${encodeURIComponent(datos.curso)}&tipo=pagoExtra&concepto=${concepto}&folio=${nuevoFolio}&monto=${encodeURIComponent(datos.monto)}&pago=${encodeURIComponent(datos.pago)}&cambio=${cambio}&semana=${encodeURIComponent(datos.semana)}`
+        );
       } else {
         alert('No se encontró la matrícula actual');
       }
     } catch (error) {
-      console.error('Error al registrar el alumno:', error);
-      alert('Error al registrar el alumno');
+      console.error('Error al registrar el cobro:', error);
+      alert('Error al registrar el cobro');
     }
   };
-
 
   return (
 
