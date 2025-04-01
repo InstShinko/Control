@@ -47,7 +47,7 @@ function Adeudos() {
 
 
       const handleBuscarG = async () => {
-        if (horario) {
+       
           const q = query(collection(db, 'Alumnos'), 
           where("Deuda", ">=", 1),
           where("Estado", "==", "Activo"),
@@ -71,7 +71,7 @@ function Adeudos() {
 
 
           setdeudoresG(deudoresList);
-        }
+        
       };
 
 
