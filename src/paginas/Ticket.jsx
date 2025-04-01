@@ -93,33 +93,33 @@ function Ticket() {
       case 'inscripcion':
         return (
           <>
-            <p><strong>Concepto:</strong> Inscripción</p>
-            <p><strong>Curso:</strong>{datosAlumno.curso}</p>
-            <p><strong>Monto de Inscripción:</strong> ${datosAlumno.monto}</p>
-            <p><strong>Pago de Inscripción:</strong> ${datosAlumno.pago}</p>
-            <p><strong>Cambio:</strong> ${datosAlumno.cambio}</p>
+            <p><strong>Concepto: Inscripción</strong></p>
+            <p><strong>Curso:{datosAlumno.curso}</strong></p>
+            <p><strong>Monto de Inscripción: ${datosAlumno.monto}</strong></p>
+            <p><strong>Pago de Inscripción: ${datosAlumno.pago}</strong></p>
+            <p><strong>Cambio: ${datosAlumno.cambio}</strong></p>
           </>
         );
       case 'colegiatura':
         return (
           <>
-            <p><strong>Concepto:</strong> Colegiatura</p>
-            <p><strong>Curso:</strong>{datosAlumno.curso}</p>
-            <p><strong>Semana:</strong>{datosAlumno.semana}</p>
-            <p><strong>Pagos:</strong>{datosAlumno.pagos}</p>
-            <p><strong>Colegiatura:</strong> ${datosAlumno.pago}</p>
-            <p><strong>Monto:</strong> ${datosAlumno.monto}</p>
-            <p><strong>Cambio:</strong> ${datosAlumno.cambio}</p>
+            <p><strong>Concepto: Colegiatura</strong></p>
+            <p><strong>Curso:{datosAlumno.curso}</strong></p>
+            <p><strong>Semana:{datosAlumno.semana}</strong></p>
+            <p><strong>Pagos:{datosAlumno.pagos}</strong></p>
+            <p><strong>Colegiatura: ${datosAlumno.pago}</strong></p>
+            <p><strong>Monto: ${datosAlumno.monto}</strong></p>
+            <p><strong>Cambio: ${datosAlumno.cambio}</strong></p>
           </>
         );
       case 'pagoExtra':
         return (
           <>
-            <p><strong>Curso:</strong>{datosAlumno.curso}</p>
-            <p><strong>Concepto:</strong>{datosAlumno.semana}</p>
-            <p><strong>Costo:</strong> ${datosAlumno.pago}</p>
-            <p><strong>Monto:</strong> ${datosAlumno.monto}</p>
-            <p><strong>Cambio:</strong> ${datosAlumno.cambio}</p>
+            <p><strong>Curso:{datosAlumno.curso}</strong></p>
+            <p><strong>Concepto:{datosAlumno.semana}</strong></p>
+            <p><strong>Costo: ${datosAlumno.pago}</strong></p>
+            <p><strong>Monto: ${datosAlumno.monto}</strong></p>
+            <p><strong>Cambio: ${datosAlumno.cambio}</strong></p>
           </>
         );
       default:
@@ -136,17 +136,17 @@ function Ticket() {
           <h3>Recibo de Pago</h3>
         </div>
         <div className='d-flex flex-column justify-content-center'>
-          <p><strong>Dirección:</strong> Av. Madero 203D, Colonia Centro, Pachuca Hidalgo, Cp:42000</p>
-          <p><strong>Telefono:</strong> 771-489-70-33</p>
-          <p><strong>RFC:</strong> GID030807AH1</p>
+          <p><strong>Dirección: Av. Madero 203D, Colonia Centro, Pachuca Hidalgo, Cp:42000</strong></p>
+          <p><strong>Telefono: 771-489-70-33</strong></p>
+          <p><strong>RFC: GID030807AH1</strong></p>
         </div>
             <div className="m-2 d-flex flex-row justify-content-center" align="center">
               <p><strong>Folio:</strong>{datosAlumno.folio} </p>
             </div>
-            <p><strong>Matrícula:</strong> {datosAlumno.matricula}</p>
-            <p><strong>Nombre:</strong> {datosAlumno.nombre}</p>
+            <p><strong>Matrícula: {datosAlumno.matricula}</strong></p>
+            <p><strong>Nombre: {datosAlumno.nombre}</strong></p>
             {renderTicketContent()}
-            <p><strong>Fecha:</strong> {new Date().toLocaleDateString()}</p>
+            <p><strong>Fecha: {new Date().toLocaleDateString()}</strong></p>
                     {/* Botón de regreso */}
         <div className="d-flex justify-content-center mt-4">
           <button
