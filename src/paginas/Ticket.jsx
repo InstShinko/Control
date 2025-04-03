@@ -141,7 +141,7 @@ function Ticket() {
         
         <div className='d-flex flex-column justify-content-center'>
           <h2><strong>Dirección: Av. Madero 203D,</strong></h2>
-          <h2><strong>Colonia Centro, Pachuca Hidalgo,</strong></h2>
+          <h2><strong>Colonia Centro, Pachuca Hgo,</strong></h2>
           <h2><strong>Cp:42000</strong></h2>
           <h2><strong>Telefono: 771-489-70-33</strong></h2>
           <h2><strong>RFC: GID030807AH1</strong></h2>
