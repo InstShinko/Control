@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Accordion } from 'react-bootstrap';
+import { Accordion, Offcanvas, Button } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 import { useAuth } from '../BD/AuthContext';
@@ -11,6 +11,12 @@ function Barra() {
   const navigate = useNavigate();
   const location = useLocation();
   const { currentUser } = useAuth();
+
+  const [show, setShow] = useState(false); // Estado para controlar el Offcanvas
+
+  const handleClose = () => setShow(false); // Cerrar el Offcanvas
+  const handleShow = () => setShow(true); // Mostrar el Offcanvas
+
 
   const handleNavigateToCobro = () => {
     navigate('/cobro');
@@ -173,8 +179,18 @@ function Barra() {
   }
 
   return (
-    <div className="bg-light border-end" style={{ width: '250px', minHeight: '100vh', position: 'fixed' }}>
-      <h4 className="text-center py-3">Menú</h4>
+    <div className="bg-light border-end" style={{ width: '100px', minHeight: '100vh', position: 'fixed' }}>
+      
+      <Button variant="primary" className="m-3" onClick={handleShow}>
+        Menú
+      </Button>
+            {/* Offcanvas para la barra lateral */}
+            <Offcanvas show={show} onHide={handleClose} placement="start">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Menú</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+     
       <ul className="list-group">
         <li className="list-group-item" onClick={handleNavigateToRegistro}>
           Registro
@@ -274,6 +290,8 @@ function Barra() {
           </li>
         </div>
       </ul>
+      </Offcanvas.Body>
+      </Offcanvas>
     </div> 
   );
 }
