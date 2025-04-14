@@ -76,6 +76,7 @@ function Ticket() {
         });
 
         console.log('Folio guardado con éxito');
+        window.print(); // Imprimir el recibo después de guardarlo
       } else {
         console.error('No se encontró el documento de Matriculas');
       }

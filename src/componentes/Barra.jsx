@@ -6,13 +6,17 @@ import { getAuth, signOut } from 'firebase/auth';
 import { useAuth } from '../BD/AuthContext';
 import { collection, getDocs, query, where, updateDoc } from 'firebase/firestore';
 import { db } from '../BD/firebase-config';
+import tachuela from '../clavo.png';
 
 function Barra() {
+  const [isChecked, setIsChecked] = useState(false); // Estado para controlar el checkbox
+
   const navigate = useNavigate();
   const location = useLocation();
   const { currentUser } = useAuth();
 
   const [show, setShow] = useState(false); // Estado para controlar el Offcanvas
+  const [ancho, setancho] = useState(100); 
 
   const handleClose = () => setShow(false); // Cerrar el Offcanvas
   const handleShow = () => setShow(true); // Mostrar el Offcanvas
@@ -142,6 +146,7 @@ function Barra() {
   };
 
 
+
   const reducirdeuda = async () => {
     try {
       // Mostrar un cuadro de confirmación
@@ -178,14 +183,131 @@ function Barra() {
     return null; // No renderizar el componente Barra si no hay usuario autenticado o si la ruta es /ticket
   }
 
-  return (
-    <div className="bg-light border-end" style={{ width: '100px', minHeight: '100vh', position: 'fixed' }}>
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked); // Alternar el estado entre true y false
+    if (isChecked) {
+      setancho(100); // Cambiar el ancho a 100px
+    } else {
+      setancho(300); // Cambiar el ancho a 100px
+    }
+  };
+
+  const mostrarBarra = () => {
+    if (isChecked) {
       
-      <Button variant="primary" className="m-3" onClick={handleShow}>
+      return (
+        <>
+           <ul className="list-group">
+        <li className="list-group-item" onClick={handleNavigateToRegistro}>
+          Registro
+        </li>
+
+        <Accordion>
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>Pagos</Accordion.Header>
+            <Accordion.Body>
+              <ul className="list-group">
+                <li className="list-group-item" onClick={handleNavigateToBusID}>
+                  Colegiatura por ID
+                </li>
+                <li className="list-group-item" onClick={handleNavigateToNom}>
+                  Colegiatura por Nombre
+                </li>
+                <li className="list-group-item" onClick={handleNavigateToCobro}>
+                  Pago Extra
+                </li>
+              </ul>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+
+        <Accordion>
+          <Accordion.Item eventKey="1">
+            <Accordion.Header>Adeudos</Accordion.Header>
+            <Accordion.Body>
+              <ul className="list-group">
+                <li className="list-group-item" onClick={() => handleNavigateToAdeudos('horario')}>
+                  Ver por horario
+                </li>
+                <li className="list-group-item" onClick={() => handleNavigateToAdeudos('general')}>
+                  Ver adeudos generales
+                </li>
+              </ul>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+
+        <Accordion>
+          <Accordion.Item eventKey="2">
+            <Accordion.Header>Alumnos</Accordion.Header>
+            <Accordion.Body>
+              <ul className="list-group">
+                <li className="list-group-item"  onClick={() => handleNavigateToAlumno('modi')}>Modificar información</li>
+                <li className="list-group-item"  onClick={() => handleNavigateToAlumno('ver')}>Ver calificaciónes</li>
+                <li className="list-group-item"  onClick={() => handleNavigateToAlumno('cargar')}>Cargar calificación</li>
+                <li className="list-group-item"  onClick={() => handleNavigateToAlumno('modicali')}>Modificar calificación</li>
+              </ul>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+
+        <Accordion>
+          <Accordion.Item eventKey="3">
+            <Accordion.Header>Folios</Accordion.Header>
+            <Accordion.Body>
+              <ul className="list-group">
+                <li className="list-group-item" onClick={() => handleNavigateToFolio('fecha')}>Buscar por Fecha</li>
+                <li className="list-group-item" onClick={() => handleNavigateToFolio('idalumno')}>Buscar por Id del alumno</li>
+                <li className="list-group-item" onClick={() => handleNavigateToFolio('idfolio')}>Buscar por folio</li>
+              </ul>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+
+        <Accordion>
+          <Accordion.Item eventKey="4">
+            <Accordion.Header>Cortes</Accordion.Header>
+            <Accordion.Body>
+              <ul className="list-group">
+                <li className="list-group-item" onClick={calcularTotalDelDia}>Rápido</li>
+                <li className="list-group-item" onClick={() =>handleNavigateToCorte('fecha')}>Por Fecha</li>
+              </ul>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+
+
+        <Accordion>
+          <Accordion.Item eventKey="5">
+            <Accordion.Header>Semana</Accordion.Header>
+            <Accordion.Body>
+              <ul className="list-group">
+                <li className="list-group-item" onClick={aumentardeuda}>Comenzar Semana</li>
+                <li className="list-group-item" onClick={reducirdeuda}>Reducir</li>
+              </ul>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+
+        <div className="my-5">
+
+          <li className="btn btn-danger text-white my-2 w-100" onClick={CerrarSesion}>
+            Cerrar Sesión
+          </li>
+        </div>
+      </ul>
+        </>
+      );
+
+    } else {
+      
+      return (
+        <>
+          <Button variant="primary" className="m-3" onClick={handleShow}>
         Menú
       </Button>
             {/* Offcanvas para la barra lateral */}
-            <Offcanvas show={show} onHide={handleClose} placement="start">
+      <Offcanvas show={show} onHide={handleClose} placement="start">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Menú</Offcanvas.Title>
         </Offcanvas.Header>
@@ -292,6 +414,34 @@ function Barra() {
       </ul>
       </Offcanvas.Body>
       </Offcanvas>
+        </>
+      );
+    }
+  }
+
+
+
+  return (
+
+    
+    <div className="bg-light border-end" style={{ width: ancho, minHeight: '100vh', position: 'fixed' }}>
+      
+    <div class="form-check m-3">
+    <input
+          className="form-check-input"
+          type="checkbox"
+          id="checkbarra"
+          checked={isChecked} // Vincular el estado al atributo checked
+          onChange={handleCheckboxChange} // Actualizar el estado al cambiar
+          value={isChecked ? 'Activo' : 'Inactivo'} // Cambiar el valor dinámicamente
+        />
+     
+        <img src={tachuela}  className='mx-auto d-block' width="20" alt='logotipo' />
+   </div>
+
+   {mostrarBarra()}
+
+
     </div> 
   );
 }
