@@ -246,6 +246,7 @@ function Barra() {
                 <li className="list-group-item"  onClick={() => handleNavigateToAlumno('ver')}>Ver calificaciónes</li>
                 <li className="list-group-item"  onClick={() => handleNavigateToAlumno('cargar')}>Cargar calificación</li>
                 <li className="list-group-item"  onClick={() => handleNavigateToAlumno('modicali')}>Modificar calificación</li>
+                <li className="list-group-item"  onClick={() => handleNavigateToAlumno('elicali')}>Borrar calificación</li>
               </ul>
             </Accordion.Body>
           </Accordion.Item>
@@ -362,6 +363,8 @@ function Barra() {
                 <li className="list-group-item"  onClick={() => handleNavigateToAlumno('ver')}>Ver calificaciónes</li>
                 <li className="list-group-item"  onClick={() => handleNavigateToAlumno('cargar')}>Cargar calificación</li>
                 <li className="list-group-item"  onClick={() => handleNavigateToAlumno('modicali')}>Modificar calificación</li>
+                <li className="list-group-item"  onClick={() => handleNavigateToAlumno('elicali')}>Borrar calificación</li>
+      
               </ul>
             </Accordion.Body>
           </Accordion.Item>

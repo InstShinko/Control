@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Select from 'react-select';
 import { useLocation } from 'react-router-dom';
-import {doc, getDoc, updateDoc, collection, addDoc, getDocs} from 'firebase/firestore';
+import {doc, getDoc, updateDoc, collection, addDoc, getDocs, deleteDoc } from 'firebase/firestore';
 import { db } from '../BD/firebase-config';
 import { useNavigate } from 'react-router-dom';
 
@@ -323,6 +323,47 @@ function Alumno() {
       }
     };  
 
+
+    const obtenerNombreAlumno = async () => {
+      if (!datosAlumno.id) {
+        alert('Por favor, ingresa un ID válido.');
+        return;
+      }
+    
+      try {
+        const docRef = doc(db, 'Alumnos', datosAlumno.id); // Referencia al documento del alumno
+        const docSnap = await getDoc(docRef); // Obtener el documento
+    
+        if (docSnap.exists()) {
+          const alumnoData = docSnap.data(); // Obtener los datos del documento
+          setDatosAlumno((prevDatos) => ({
+            ...prevDatos,
+            nombre: alumnoData.Nombre || '', // Actualizar el estado con el nombre del alumno
+          }));
+        } else {
+          alert('No se encontró un alumno con ese ID.');
+        }
+      } catch (error) {
+        console.error('Error al obtener el nombre del alumno:', error);
+        alert('Hubo un error al obtener el nombre del alumno.');
+      }
+    };
+
+    const eliminarcali = async () => {
+
+      let confirmar = window.confirm("¿Estas seguro de eliminar la calificación?");
+      if (confirmar === true) {
+          if (!datosAlumno.id || !datosAlumno.idcali) {
+          alert('Por favor, completa todos los campos antes de eliminar la calificación.');
+          }
+      else{
+        await deleteDoc(doc(db, "Alumnos", datosAlumno.id, 'Creditos', datosAlumno.idcali));
+        alert("Calificación eliminada exitosamente");
+      }
+    }
+    };
+
+
     const renderContent = () => {
       switch (tipo) {
         case 'modi':
@@ -467,18 +508,26 @@ function Alumno() {
           <h1 className='display-3'>Carga de calificaciones</h1>
         </div>
 
-        <div className='d-flex flex-row my-5'>
-            
-        <input
-          type="text"
-          placeholder="ID del Alumno"
-          className="form-control m-2"
-          name="id"
-          value={datosAlumno.id}
-          onChange={handleChange}
-        />
-            
-        </div>
+        <div className='d-flex flex-row m-2'>
+                    <input
+                      type="text"
+                      placeholder="ID del Alumno"
+                      className="form-control m-2"
+                      name="id"
+                      value={datosAlumno.id}
+                      onChange={handleChange}
+                    />
+    
+    
+    <button className="btn btn-primary m-2 w-25" onClick={obtenerNombreAlumno}>Buscar</button>
+        
+    </div>
+    
+                    
+    
+    <div className='d-flex flex-row m-3'>
+      <h3>Nombre:  {datosAlumno.nombre}</h3>
+    </div>
 
 
         <div className='d-flex flex-row my-2'>
@@ -542,7 +591,7 @@ function Alumno() {
                   <h1 className='display-3'>Modificar calificación</h1>
                 </div>
         
-                
+<div className='d-flex flex-row m-2'>
                 <input
                   type="text"
                   placeholder="ID del Alumno"
@@ -551,6 +600,17 @@ function Alumno() {
                   value={datosAlumno.id}
                   onChange={handleChange}
                 />
+
+
+<button className="btn btn-primary m-2 w-25" onClick={obtenerNombreAlumno}>Buscar</button>
+    
+</div>
+
+                
+
+<div className='d-flex flex-row m-3'>
+  <h3>Nombre:  {datosAlumno.nombre}</h3>
+</div>
 
 <div className='d-flex flex-row my-2'>
                 <input
@@ -577,6 +637,54 @@ function Alumno() {
             </div>
                     </>
                     );    
+
+        case 'elicali':
+                      return (
+                        <>
+            <div className='container'>
+                    <div className='d-flex flex-row justify-content-center'>
+                      <h1 className='display-3'>Borrar calificación</h1>
+                    </div>
+            
+    <div className='d-flex flex-row m-2'>
+                    <input
+                      type="text"
+                      placeholder="ID del Alumno"
+                      className="form-control m-2"
+                      name="id"
+                      value={datosAlumno.id}
+                      onChange={handleChange}
+                    />
+    
+    
+    <button className="btn btn-primary m-2 w-25" onClick={obtenerNombreAlumno}>Buscar</button>
+        
+    </div>
+    
+                    
+    
+    <div className='d-flex flex-row m-3'>
+      <h3>Nombre:  {datosAlumno.nombre}</h3>
+    </div>
+    
+    <div className='d-flex flex-row my-2'>
+                    <input
+                      type="text"
+                      placeholder="ID de la calificación"
+                      className="form-control m-2"
+                      name="idcali"
+                      value={datosAlumno.idcali}
+                      onChange={handleChange}
+                    />
+    
+                 
+                        </div>
+                    <button className="btn btn-danger m-2 w-100" onClick={eliminarcali}>Borar Calificación</button>
+        
+                    
+                </div>
+                        </>
+                        );    
 
         default:
           return <p>Tipo no reconocido</p>;
