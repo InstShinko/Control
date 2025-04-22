@@ -358,6 +358,27 @@ function Alumno() {
           }
       else{
         await deleteDoc(doc(db, "Alumnos", datosAlumno.id, 'Creditos', datosAlumno.idcali));
+
+        const creditosRef = collection(db, 'Alumnos', datosAlumno.id, 'Creditos');
+// Obtener todos los documentos de la subcolección "Creditos"
+const querySnapshot = await getDocs(creditosRef);
+    
+// Calcular el promedio
+let sumaCalificaciones = 0;
+let totalDocumentos = 0;
+
+querySnapshot.forEach((doc) => {
+  sumaCalificaciones += doc.data().Calificacion;
+  totalDocumentos += 1;
+});
+
+const promedio = totalDocumentos > 0 ? sumaCalificaciones / totalDocumentos : 0;
+
+// Actualizar el campo "Promedio" en el documento del alumno
+const alumnoRef = doc(db, 'Alumnos', datosAlumno.id);
+await updateDoc(alumnoRef, {
+  Promedio: promedio,
+});
         alert("Calificación eliminada exitosamente");
       }
     }
