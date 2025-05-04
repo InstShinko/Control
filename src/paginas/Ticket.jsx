@@ -44,7 +44,8 @@ function Ticket() {
     pagos: searchParams.get('pagos'),
     semana: searchParams.get('semana'),
     concepto: searchParams.get('concepto'),
-    fecha: fechacom
+    fecha: fechacom,
+    pagado: searchParams.get('pagado')
   };
 
   const guardarFolioEnFirebase = async () => {
@@ -61,7 +62,7 @@ function Ticket() {
           Folio: datosAlumno.folio,
           Matricula: datosAlumno.matricula,
           Nombre: datosAlumno.nombre,
-          Monto: parseFloat(datosAlumno.pago),
+          Monto: parseFloat(datosAlumno.pagado),
           Cambio: parseFloat(datosAlumno.cambio),
           Concepto: datosAlumno.concepto,
         

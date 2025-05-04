@@ -125,7 +125,7 @@ const [cursosMultiples, setCursosMultiples] = useState([]);
         setDatos.pagos = parseInt(datos.pagos);
         setDatos.monto = parseFloat(datos.monto);
         setDatos.pago = parseFloat(datos.pago);
-
+        let pagado= datos.pagos * datos.pago;
         const cambio = datos.monto - datos.pago * datos.pagos;
 
         // Actualizar la deuda del alumno
@@ -154,7 +154,7 @@ const [cursosMultiples, setCursosMultiples] = useState([]);
 
         // Redirigir a la página de ticket con los datos del cobro
         navigate(
-          `/ticket?matricula=${encodeURIComponent(datos.id)}&nombre=${encodeURIComponent(datos.nombre)}&curso=${encodeURIComponent(datos.curso)}&tipo=colegiatura&folio=${nuevoFolio}&concepto=${concepto}&monto=${encodeURIComponent(datos.monto)}&pago=${encodeURIComponent(datos.pago)}&cambio=${cambio}&semana=${encodeURIComponent(datos.semana)}&pagos=${encodeURIComponent(datos.pagos)}`
+          `/ticket?matricula=${encodeURIComponent(datos.id)}&nombre=${encodeURIComponent(datos.nombre)}&curso=${encodeURIComponent(datos.curso)}&tipo=colegiatura&folio=${nuevoFolio}&concepto=${concepto}&monto=${encodeURIComponent(datos.monto)}&pago=${encodeURIComponent(datos.pago)}&cambio=${cambio}&semana=${encodeURIComponent(datos.semana)}&pagos=${encodeURIComponent(datos.pagos)}&pagado=${encodeURIComponent(pagado)}`
         );
       } else {
         alert('No se encontró la matrícula actual');
