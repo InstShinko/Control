@@ -67,7 +67,7 @@ function Cobro() {
 
         // Redirigir a la página de ticket con los datos del cobro
         navigate(
-          `/ticket?matricula=${encodeURIComponent(datos.id)}&nombre=${encodeURIComponent(datos.nombre)}&curso=${encodeURIComponent(datos.curso)}&tipo=pagoExtra&concepto=${concepto}&folio=${nuevoFolio}&pagado=${encodeURIComponent(datos.monto)}&pago=${encodeURIComponent(datos.pago)}&cambio=${cambio}&semana=${encodeURIComponent(datos.semana)}`
+          `/ticket?matricula=${encodeURIComponent(datos.id)}&nombre=${encodeURIComponent(datos.nombre)}&curso=${encodeURIComponent(datos.curso)}&tipo=pagoExtra&concepto=${concepto}&folio=${nuevoFolio}&monto=${encodeURIComponent(datos.monto)}&pagado=${encodeURIComponent(datos.pago)}&cambio=${cambio}&semana=${encodeURIComponent(datos.semana)}`
         );
       } else {
         alert('No se encontró la matrícula actual');

@@ -123,7 +123,7 @@ function Ticket() {
             <h2><strong>{datosAlumno.curso}</strong></h2>
             <h2><strong>Concepto:</strong></h2>
             <h2><strong>{datosAlumno.semana}</strong></h2>
-            <h2><strong>Costo: ${datosAlumno.pago}</strong></h2>
+            <h2><strong>Costo: ${datosAlumno.pagado}</strong></h2>
             <h2><strong>Monto: ${datosAlumno.monto}</strong></h2>
             <h2><strong>Cambio: ${datosAlumno.cambio}</strong></h2>
           </>
