@@ -114,6 +114,7 @@ const [cursosMultiples, setCursosMultiples] = useState([]);
     try {
       // Obtener el folio actual desde Firebase
       const matriculaDoc = await getDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'));
+      
       if (matriculaDoc.exists()) {
         let folioActual = matriculaDoc.data().Folio;
 
