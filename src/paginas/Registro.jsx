@@ -123,7 +123,7 @@ function Registro() {
           const concepto = 'Inscripción';
   
           // Redirigir a la página de ticket con los datos del alumno
-          navigate(`/ticket?matricula=${nuevaMatricula}&nombre=${encodeURIComponent(datosAlumno.nombre)}&telefono=${encodeURIComponent(datosAlumno.telefono)}&direccion=${encodeURIComponent(datosAlumno.direccion)}&correo=${encodeURIComponent(datosAlumno.correo)}&curso=${encodeURIComponent(datosAlumno.curso)}&horario=${encodeURIComponent(datosAlumno.horario)}&colegiatura=${encodeURIComponent(datosAlumno.colegiatura)}&asesor=${encodeURIComponent(datosAlumno.asesor)}&tipo=inscripcion&folio=${nuevoFolio}&concepto=${concepto}&monto=${datosAlumno.monto}&pago=${datosAlumno.pago}&cambio=${cambio}`);
+          navigate(`/ticket?matricula=${nuevaMatricula}&nombre=${encodeURIComponent(datosAlumno.nombre)}&telefono=${encodeURIComponent(datosAlumno.telefono)}&direccion=${encodeURIComponent(datosAlumno.direccion)}&correo=${encodeURIComponent(datosAlumno.correo)}&curso=${encodeURIComponent(datosAlumno.curso)}&horario=${encodeURIComponent(datosAlumno.horario)}&colegiatura=${encodeURIComponent(datosAlumno.colegiatura)}&asesor=${encodeURIComponent(datosAlumno.asesor)}&tipo=inscripcion&folio=${nuevoFolio}&concepto=${concepto}&monto=${datosAlumno.monto}&pago=${datosAlumno.pago}&cambio=${cambio}&pagado=${datosAlumno.monto}`);
         } else {
           alert('No se encontró la matrícula actual');
         }
