@@ -11,6 +11,12 @@ function Registro() {
   const navigate = useNavigate();
 
   const cursos = [
+    { value: "Verano - Hacho Into the World", label: "Verano - Hacho Into the World" },
+    { value: "Verano - Robótica e Impresión 3D", label: "Verano - Robótica e Impresión 3D" },
+    { value: "Verano - Programación  de Videojuegos", label: "Verano - Programación  de Videojuegos" },
+    { value: "Verano - Animación de  Caricaturas", label: "Verano - Animación de  Caricaturas" },
+    { value: "Verano - Guitarra y  Producción", label: "Verano - Guitarra y  Producción" },
+
     { value: "Diseño Grafico Shinko", label: "Diseño Grafico Shinko" },
     { value: "Programación Shinko", label: "Programación Shinko" },
     { value: "Ofimatica Shinko", label: "Ofimatica Shinko" },
@@ -40,8 +46,9 @@ function Registro() {
     { value: "GERARDO DIAZ ARROYO", label: "GERARDO DIAZ ARROYO" },
     { value: "JORGE IGNACIO MANRIQUEZ", label: "JORGE IGNACIO MANRIQUEZ" },
     { value: "LIZETH ALVAREZ CABALLERO", label: "LIZETH ALVAREZ CABALLERO" },
-    { value: "JPAOLA MONSERRATH ORTEGA SANCHEZ", label: "PAOLA MONSERRATH ORTEGA SANCHEZ" },
+    { value: "PAOLA MONSERRATH ORTEGA SANCHEZ", label: "PAOLA MONSERRATH ORTEGA SANCHEZ" },
     { value: "SAUL JIMENEZ MERCADO", label: "SAUL JIMENEZ MERCADO" },
+    { value: "VANESSA CARRASCO CERVANTES", label: "VANESSA CARRASCO CERVANTES" },
     { value: "PENDIENDTE", label: "PENDIENDTE" },
   ];
 
@@ -80,61 +87,61 @@ function Registro() {
   };
 
 
-    const handleRegistrarAlumno = async () => {
-      try {
-        // Obtener la matrícula y el folio actual desde Firebase
-        const matriculaDoc = await getDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'));
-        if (matriculaDoc.exists()) {
-          let matriculaActual = matriculaDoc.data().NumMatricula;
-          let folioActual = matriculaDoc.data().Folio;
-  
-          matriculaActual = parseInt(matriculaActual);
-          folioActual = parseInt(folioActual);
-  
-          // Incrementar la matrícula y el folio
-          const nuevaMatricula = matriculaActual + 1;
-          const nuevoFolio = folioActual + 1;
-  
-          const cambio = datosAlumno.pago - datosAlumno.monto;
-  
-          // Registrar el nuevo alumno en la colección Alumnos
-          await setDoc(doc(db, 'Alumnos', nuevaMatricula.toString()), {
-            Nombre: datosAlumno.nombre,
-            Telefono: datosAlumno.telefono,
-            Direccion: datosAlumno.direccion,
-            Correo: datosAlumno.correo,
-            Curso: datosAlumno.curso,
-            Horario: datosAlumno.horario,
-            Colegiatura: parseInt(datosAlumno.colegiatura),
-            Estado: "Activo",
-            Deuda: 1,
-            FechaR: new Date().toLocaleDateString(),
-            Inscrito: datosAlumno.asesor,
-            Promedio: 0,
-            Profesor: datosAlumno.profesor
-          });
-  
-          // Actualizar la matrícula y el folio en Firebase
-          await updateDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'), {
-            NumMatricula: nuevaMatricula,
-            Folio: nuevoFolio
-          });
-  
-          const concepto = 'Inscripción';
-  
-          // Redirigir a la página de ticket con los datos del alumno
-          navigate(`/ticket?matricula=${nuevaMatricula}&nombre=${encodeURIComponent(datosAlumno.nombre)}&telefono=${encodeURIComponent(datosAlumno.telefono)}&direccion=${encodeURIComponent(datosAlumno.direccion)}&correo=${encodeURIComponent(datosAlumno.correo)}&curso=${encodeURIComponent(datosAlumno.curso)}&horario=${encodeURIComponent(datosAlumno.horario)}&colegiatura=${encodeURIComponent(datosAlumno.colegiatura)}&asesor=${encodeURIComponent(datosAlumno.asesor)}&tipo=inscripcion&folio=${nuevoFolio}&concepto=${concepto}&monto=${datosAlumno.monto}&pago=${datosAlumno.pago}&cambio=${cambio}&pagado=${datosAlumno.monto}`);
-        } else {
-          alert('No se encontró la matrícula actual');
-        }
-      } catch (error) {
-        console.error('Error al registrar el alumno:', error);
-        alert('Error al registrar el alumno');
+  const handleRegistrarAlumno = async () => {
+    try {
+      // Obtener la matrícula y el folio actual desde Firebase
+      const matriculaDoc = await getDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'));
+      if (matriculaDoc.exists()) {
+        let matriculaActual = matriculaDoc.data().NumMatricula;
+        let folioActual = matriculaDoc.data().Folio;
+
+        matriculaActual = parseInt(matriculaActual);
+        folioActual = parseInt(folioActual);
+
+        // Incrementar la matrícula y el folio
+        const nuevaMatricula = matriculaActual + 1;
+        const nuevoFolio = folioActual + 1;
+
+        const cambio = datosAlumno.pago - datosAlumno.monto;
+
+        // Registrar el nuevo alumno en la colección Alumnos
+        await setDoc(doc(db, 'Alumnos', nuevaMatricula.toString()), {
+          Nombre: datosAlumno.nombre,
+          Telefono: datosAlumno.telefono,
+          Direccion: datosAlumno.direccion,
+          Correo: datosAlumno.correo,
+          Curso: datosAlumno.curso,
+          Horario: datosAlumno.horario,
+          Colegiatura: parseInt(datosAlumno.colegiatura),
+          Estado: "Activo",
+          Deuda: 1,
+          FechaR: new Date().toLocaleDateString(),
+          Inscrito: datosAlumno.asesor,
+          Promedio: 0,
+          Profesor: datosAlumno.profesor
+        });
+
+        // Actualizar la matrícula y el folio en Firebase
+        await updateDoc(doc(db, 'Matriculas', 'yezMAhyI2J0Yjhwe2BZL'), {
+          NumMatricula: nuevaMatricula,
+          Folio: nuevoFolio
+        });
+
+        const concepto = 'Inscripción';
+
+        // Redirigir a la página de ticket con los datos del alumno
+        navigate(`/ticket?matricula=${nuevaMatricula}&nombre=${encodeURIComponent(datosAlumno.nombre)}&telefono=${encodeURIComponent(datosAlumno.telefono)}&direccion=${encodeURIComponent(datosAlumno.direccion)}&correo=${encodeURIComponent(datosAlumno.correo)}&curso=${encodeURIComponent(datosAlumno.curso)}&horario=${encodeURIComponent(datosAlumno.horario)}&colegiatura=${encodeURIComponent(datosAlumno.colegiatura)}&asesor=${encodeURIComponent(datosAlumno.asesor)}&tipo=inscripcion&folio=${nuevoFolio}&concepto=${concepto}&monto=${datosAlumno.monto}&pago=${datosAlumno.pago}&cambio=${cambio}&pagado=${datosAlumno.monto}`);
+      } else {
+        alert('No se encontró la matrícula actual');
       }
-    };
-  
-    // Resto del componente...
-  
+    } catch (error) {
+      console.error('Error al registrar el alumno:', error);
+      alert('Error al registrar el alumno');
+    }
+  };
+
+  // Resto del componente...
+
 
   return (
     <div className='container-fluid bg-dark text-white p-4' style={{ minHeight: '100vh' }}>
@@ -152,40 +159,40 @@ function Registro() {
           onChange={handleChange}
         />
 
-<div className='d-flex flex-row my-2'>
+        <div className='d-flex flex-row my-2'>
 
-        <input
-          type="number"
-          placeholder="Numero de contacto del Alumno"
-          className="form-control m-2"
-          name="telefono"
-          value={datosAlumno.telefono}
-          onChange={handleChange}
-        />
+          <input
+            type="number"
+            placeholder="Numero de contacto del Alumno"
+            className="form-control m-2"
+            name="telefono"
+            value={datosAlumno.telefono}
+            onChange={handleChange}
+          />
 
-        <input
-          type="text"
-          placeholder="Correo electronico del Alumno"
-          className="form-control m-2"
-          name="correo"
-          value={datosAlumno.correo}
-          onChange={handleChange}
-        />
+          <input
+            type="text"
+            placeholder="Correo electronico del Alumno"
+            className="form-control m-2"
+            name="correo"
+            value={datosAlumno.correo}
+            onChange={handleChange}
+          />
 
-</div>
+        </div>
 
-<div className='d-flex flex-row justify-content-center'>
+        <div className='d-flex flex-row justify-content-center'>
           <h1 className='display-3'>Datos del Curso</h1>
         </div>
 
         <Select
-            options={profesores}
-            placeholder="¿Quien dara el curso?"
-            className="form-select m-2"
-            name="profesor"
-            value={profesores.find(option => option.value === datosAlumno.profesor)}
-            onChange={handleSelectChange}
-          />
+          options={profesores}
+          placeholder="¿Quien dara el curso?"
+          className="form-select m-2"
+          name="profesor"
+          value={profesores.find(option => option.value === datosAlumno.profesor)}
+          onChange={handleSelectChange}
+        />
 
         <div className='d-flex flex-row my-2'>
           <Select
