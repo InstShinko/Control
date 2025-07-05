@@ -181,10 +181,7 @@ function Registro() {
 
         </div>
 
-        <div className='d-flex flex-row justify-content-center'>
-          <h1 className='display-3'>Datos del Curso</h1>
-        </div>
-
+      
         <Select
           options={profesores}
           placeholder="¿Quien dara el curso?"
