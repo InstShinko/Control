@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Select from 'react-select';
 import { useLocation } from 'react-router-dom';
-import { doc, getDoc, updateDoc, collection, addDoc, getDocs, deleteDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, collection, addDoc, getDocs, deleteDoc, query, where } from 'firebase/firestore';
 import { db } from '../BD/firebase-config';
 import { useNavigate } from 'react-router-dom';
 
@@ -27,6 +27,8 @@ function Alumno() {
     idcali: ''
   });
 
+   const [datosAluB, setDatosAluB] = useState([]);
+  const [datosAluE, setDatosAluE] = useState([]);
 
 
 
@@ -390,6 +392,47 @@ function Alumno() {
     }
   };
 
+  const buscarAlumnosBaja = async () => {
+    const q = query(collection(db, 'Alumnos'),
+      where("Estado", "==", "Baja")
+    );
+    const querySnapshot = await getDocs(q);
+    const bajasList = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      Nombre: doc.data().Nombre,
+      Telefono: doc.data().Telefono,
+      Horario: doc.data().Horario,
+      Curso: doc.data().Curso,
+
+
+    }));
+
+
+
+
+    setDatosAluB(bajasList);
+  }
+
+  const buscarAlumnosEgre = async () => {
+    const q = query(collection(db, 'Alumnos'),
+      where("Estado", "==", "Egresado")
+    );
+    const querySnapshot = await getDocs(q);
+    const bajasList = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      Nombre: doc.data().Nombre,
+      Telefono: doc.data().Telefono,
+      Horario: doc.data().Horario,
+      Curso: doc.data().Curso,
+
+
+    }));
+
+
+
+
+    setDatosAluE(bajasList);
+  }
 
   const renderContent = () => {
     switch (tipo) {
@@ -710,6 +753,96 @@ function Alumno() {
 
 
             </div>
+          </>
+        );
+
+      case 'bajas':
+        return (
+          <>
+            <div className='d-flex flex-row justify-content-center'>
+              <h1 className='display-3'>Alumnos dados de Baja</h1>
+            </div>
+
+
+            <button className="btn btn-primary  m-2 w-100" onClick={buscarAlumnosBaja}>
+              Buscar
+            </button>
+
+
+
+
+
+            <table className="table m-2">
+              <thead>
+                <tr>
+                  <th>Matricula</th>
+                  <th>Nombre</th>
+                  <th>Telefono</th>
+                  <th>Horario</th>
+                  <th>Especialidad</th>
+
+                </tr>
+
+              </thead>
+
+              <tbody>
+                {datosAluB.map((alumno) => (
+                  <tr key={alumno.id}>
+                    <td>{alumno.id}</td>
+                    <td>{alumno.Nombre}</td>
+                    <td>{alumno.Telefono}</td>
+                    <td>{alumno.Horario}</td>
+                    <td>{alumno.Curso}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+          </>
+        );
+
+      case 'egre':
+        return (
+            <>
+            <div className='d-flex flex-row justify-content-center'>
+              <h1 className='display-3'>Alumnos Egresados</h1>
+            </div>
+
+
+            <button className="btn btn-primary  m-2 w-100" onClick={buscarAlumnosEgre}>
+              Buscar
+            </button>
+
+
+
+
+
+            <table className="table m-2">
+              <thead>
+                <tr>
+                  <th>Matricula</th>
+                  <th>Nombre</th>
+                  <th>Telefono</th>
+                  <th>Horario</th>
+                  <th>Especialidad</th>
+
+                </tr>
+
+              </thead>
+
+              <tbody>
+                {datosAluE.map((alumno) => (
+                  <tr key={alumno.id}>
+                    <td>{alumno.id}</td>
+                    <td>{alumno.Nombre}</td>
+                    <td>{alumno.Telefono}</td>
+                    <td>{alumno.Horario}</td>
+                    <td>{alumno.Curso}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
           </>
         );
 
