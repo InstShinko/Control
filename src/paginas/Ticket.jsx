@@ -65,7 +65,7 @@ function Ticket() {
           Monto: parseFloat(datosAlumno.pagado),
           Cambio: parseFloat(datosAlumno.cambio),
           Concepto: datosAlumno.concepto,
-        
+          FechaC:hoy,
           Fecha: datosAlumno.fecha
         }
       );
