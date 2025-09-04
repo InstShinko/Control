@@ -56,12 +56,13 @@ function Registro() {
     { value: "ALINE ESMERALDA MALDONADO SAMPAYO", label: "ALINE ESMERALDA MALDONADO SAMPAYO" },
     { value: "ANGEL JOEL ALVAREZ CABALLERO", label: "ANGEL JOEL ALVAREZ CABALLERO" },
     { value: "DANIEL GARRIDO LUNA", label: "DANIEL GARRIDO LUNA" },
-      { value: "DANAE REYES PEREZ", label: "DANAE REYES PEREZ" },
+    { value: "DANAE REYES PEREZ", label: "DANAE REYES PEREZ" },
     { value: "JAEL ALVAREZ CABALLERO", label: "JAEL ALVAREZ CABALLERO" },
     { value: "GERARDO DIAZ ARROYO", label: "GERARDO DIAZ ARROYO" },
+    { value: "IGNACIO SAMAEL MUÑOZ MEYER", label: "IGNACIO SAMAEL MUÑOZ MEYER"},
     { value: "JORGE IGNACIO MANRIQUEZ", label: "JORGE IGNACIO MANRIQUEZ" },
     { value: "LIZETH ALVAREZ CABALLERO", label: "LIZETH ALVAREZ CABALLERO" },
-        { value: "LIZETH YUNUEN MARTINEZ HERRERA", label: "LIZETH YUNUEN MARTINEZ HERRERA" },
+    { value: "LIZBETH YUNUEN MARTINEZ HERRERA", label: "LIZBETH YUNUEN MARTINEZ HERRERA" },
     { value: "PAOLA MONSERRATH ORTEGA SANCHEZ", label: "PAOLA MONSERRATH ORTEGA SANCHEZ" },
     { value: "SAUL JIMENEZ MERCADO", label: "SAUL JIMENEZ MERCADO" },
     { value: "VANESSA CARRASCO CERVANTES", label: "VANESSA CARRASCO CERVANTES" },
@@ -227,7 +228,7 @@ function Registro() {
 
   };
 
-   const DescargarInforme = async () => {
+  const DescargarInforme = async () => {
     const arreglo = [];
     let inicio, final;
     inicio = parseInt(matriculaInicio);
@@ -256,16 +257,16 @@ function Registro() {
     }
     setRegistros(resultados);
 
-          // 1. Convierte los datos a una hoja de Excel
-  const worksheet = XLSX.utils.json_to_sheet(registros);
-  // 2. Crea un libro de Excel y agrega la hoja
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, 'InforrmeRegistros');
-  // 3. Genera el archivo Excel en formato binario
-  const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-  // 4. Descarga el archivo usando file-saver
-  const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-  saveAs(blob, 'InforrmeRegistros.xlsx');
+    // 1. Convierte los datos a una hoja de Excel
+    const worksheet = XLSX.utils.json_to_sheet(registros);
+    // 2. Crea un libro de Excel y agrega la hoja
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'InforrmeRegistros');
+    // 3. Genera el archivo Excel en formato binario
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    // 4. Descarga el archivo usando file-saver
+    const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    saveAs(blob, 'InforrmeRegistros.xlsx');
 
   };
 
@@ -445,7 +446,7 @@ function Registro() {
               </div>
 
               <div className="col-2 m-2">
-                <button className="btn btn-success w-100"onClick={DescargarInforme} >Descargar</button>
+                <button className="btn btn-success w-100" onClick={DescargarInforme} >Descargar</button>
               </div>
             </div>
 

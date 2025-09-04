@@ -27,7 +27,7 @@ function Alumno() {
     idcali: ''
   });
 
-   const [datosAluB, setDatosAluB] = useState([]);
+  const [datosAluB, setDatosAluB] = useState([]);
   const [datosAluE, setDatosAluE] = useState([]);
 
 
@@ -55,9 +55,10 @@ function Alumno() {
     { value: "DANAE REYES PEREZ", label: "DANAE REYES PEREZ" },
     { value: "JAEL ALVAREZ CABALLERO", label: "JAEL ALVAREZ CABALLERO" },
     { value: "GERARDO DIAZ ARROYO", label: "GERARDO DIAZ ARROYO" },
+    { value: "IGNACIO SAMAEL MUÑOZ MEYER", label: "IGNACIO SAMAEL MUÑOZ MEYER" },
     { value: "JORGE IGNACIO MANRIQUEZ", label: "JORGE IGNACIO MANRIQUEZ" },
     { value: "LIZETH ALVAREZ CABALLERO", label: "LIZETH ALVAREZ CABALLERO" },
-    { value: "LIZETH YUNUEN MARTINEZ HERRERA", label: "LIZETH YUNUEN MARTINEZ HERRERA" },
+    { value: "LIZBETH YUNUEN MARTINEZ HERRERA", label: "LIZBETH YUNUEN MARTINEZ HERRERA" },
     { value: "PAOLA MONSERRATH ORTEGA SANCHEZ", label: "PAOLA MONSERRATH ORTEGA SANCHEZ" },
     { value: "SAUL JIMENEZ MERCADO", label: "SAUL JIMENEZ MERCADO" },
     { value: "VANESSA CARRASCO CERVANTES", label: "VANESSA CARRASCO CERVANTES" },
@@ -805,7 +806,7 @@ function Alumno() {
 
       case 'egre':
         return (
-            <>
+          <>
             <div className='d-flex flex-row justify-content-center'>
               <h1 className='display-3'>Alumnos Egresados</h1>
             </div>
