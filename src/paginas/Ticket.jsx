@@ -142,7 +142,7 @@ function Ticket() {
           <h1>Recibo de Pago</h1>
         
         <div className='d-flex flex-column justify-content-center'>
-          <h2><strong>Dirección: Av. Madero 203D,</strong></h2>
+          <h2><strong>Dirección: Guerrero #519,</strong></h2>
           <h2><strong>Colonia Centro, Pachuca Hgo,</strong></h2>
           <h2><strong>Cp:42000</strong></h2>
           <h2><strong>Telefono: 771-489-70-33</strong></h2>
