@@ -25,17 +25,14 @@ function Registro() {
   const navigate = useNavigate();
 
   const cursos = [
-    { value: "Verano - Hacho Into the World", label: "Verano - Hacho Into the World" },
-    { value: "Verano - Robótica e Impresión 3D", label: "Verano - Robótica e Impresión 3D" },
-    { value: "Verano - Programación  de Videojuegos", label: "Verano - Programación  de Videojuegos" },
-    { value: "Verano - Animación de  Caricaturas", label: "Verano - Animación de  Caricaturas" },
-    { value: "Verano - Guitarra y  Producción", label: "Verano - Guitarra y  Producción" },
+    { value: "Bachillerato CUG", label: "Bachillerato CUG" },
 
     { value: "Diseño Grafico Shinko", label: "Diseño Grafico Shinko" },
     { value: "Programación Shinko", label: "Programación Shinko" },
     { value: "Ofimatica Shinko", label: "Ofimatica Shinko" },
     { value: "Exploradores Shinko", label: "Exploradores Shinko" },
     { value: "Robótica Shinko", label: "Robótica Shinko" },
+    { value: "Robótica Niños Shinko", label: "Robótica Niño Shinko" },
     { value: "Certificación Internacional CERTIPORT", label: "Certificación Internacional CERTIPORT" },
     { value: "Inglés Shinko", label: "Inglés Shinko" },
     { value: "Certificación Internacional Inglés", label: "Certificación Internacional Inglés" },
