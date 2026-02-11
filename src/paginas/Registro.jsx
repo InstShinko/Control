@@ -44,16 +44,13 @@ function Registro() {
   ];
 
   const asesores = [
-    { value: "Aline", label: "Aline" },
-    { value: "Danae", label: "Danae" },
+    { value: "Comisionista", label: "Comisionista" },
     { value: "Shinko", label: "Shinko" },
   ];
 
   const profesores = [
-    { value: "ALINE ESMERALDA MALDONADO SAMPAYO", label: "ALINE ESMERALDA MALDONADO SAMPAYO" },
     { value: "ANGEL JOEL ALVAREZ CABALLERO", label: "ANGEL JOEL ALVAREZ CABALLERO" },
     { value: "DANIEL GARRIDO LUNA", label: "DANIEL GARRIDO LUNA" },
-    { value: "DANAE REYES PEREZ", label: "DANAE REYES PEREZ" },
     { value: "JAEL ALVAREZ CABALLERO", label: "JAEL ALVAREZ CABALLERO" },
     { value: "GERARDO DIAZ ARROYO", label: "GERARDO DIAZ ARROYO" },
     { value: "IGNACIO SAMAEL MUÑOZ MEYER", label: "IGNACIO SAMAEL MUÑOZ MEYER"},

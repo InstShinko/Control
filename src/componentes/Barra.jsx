@@ -398,6 +398,7 @@ function Barra() {
                         <li className="list-group-item" onClick={() => handleNavigateToAlumno('elicali')}>Borrar calificación</li>
                         <li className="list-group-item" onClick={() => handleNavigateToAlumno('bajas')}>Ver Bajas</li>
                         <li className="list-group-item" onClick={() => handleNavigateToAlumno('egre')}>Ver Egresados</li>
+                        <li className="list-group-item" onClick={()=> handleNavigateToAlumno('activos')}>Ver Activos</li>
                       </ul>
                     </Accordion.Body>
                   </Accordion.Item>

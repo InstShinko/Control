@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Select from 'react-select';
 import { useLocation } from 'react-router-dom';
-import { doc, getDoc, updateDoc, collection, addDoc, getDocs, deleteDoc, query, where } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, collection, addDoc, getDocs, deleteDoc, query, where, orderBy } from 'firebase/firestore';
 import { db } from '../BD/firebase-config';
 import { useNavigate } from 'react-router-dom';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 
 function Alumno() {
@@ -29,7 +31,7 @@ function Alumno() {
 
   const [datosAluB, setDatosAluB] = useState([]);
   const [datosAluE, setDatosAluE] = useState([]);
-
+  const [datosAluA, setDatosAluA] = useState([]);
 
 
   const handleChange = (e) => {
@@ -49,10 +51,8 @@ function Alumno() {
   };
 
   const profesores = [
-    { value: "ALINE ESMERALDA MALDONADO SAMPAYO", label: "ALINE ESMERALDA MALDONADO SAMPAYO" },
     { value: "ANGEL JOEL ALVAREZ CABALLERO", label: "ANGEL JOEL ALVAREZ CABALLERO" },
     { value: "DANIEL GARRIDO LUNA", label: "DANIEL GARRIDO LUNA" },
-    { value: "DANAE REYES PEREZ", label: "DANAE REYES PEREZ" },
     { value: "JAEL ALVAREZ CABALLERO", label: "JAEL ALVAREZ CABALLERO" },
     { value: "GERARDO DIAZ ARROYO", label: "GERARDO DIAZ ARROYO" },
     { value: "IGNACIO SAMAEL MUÑOZ MEYER", label: "IGNACIO SAMAEL MUÑOZ MEYER" },
@@ -66,7 +66,7 @@ function Alumno() {
   ];
 
 
-const cursos = [
+  const cursos = [
     { value: "Bachillerato CUG", label: "Bachillerato CUG" },
 
     { value: "Diseño Grafico Shinko", label: "Diseño Grafico Shinko" },
@@ -434,6 +434,61 @@ const cursos = [
 
     setDatosAluE(bajasList);
   }
+
+  const buscarAlumnosActivos = async () => {
+    const q = query(collection(db, 'Alumnos'),
+      where("Estado", "==", "Activo"), orderBy("Profesor", "asc")
+    );
+    const querySnapshot = await getDocs(q);
+    const activosList = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      Nombre: doc.data().Nombre,
+      Colegiatura: doc.data().Colegiatura,
+      Horario: doc.data().Horario,
+      Curso: doc.data().Curso,
+      Deuda: doc.data().Deuda, 
+      Profesor: doc.data().Profesor, 
+
+    }));
+
+
+
+
+     setDatosAluA(activosList);
+  }
+
+
+    const DescargarA = async () => {
+  
+      const q = query(collection(db, 'Alumnos'),
+        where("Estado", "==", "Activo"),
+        orderBy("Profesor", "asc")
+      );
+      const querySnapshot = await getDocs(q);
+      const deudoresList = querySnapshot.docs.map(doc => ({
+        ID: doc.id,
+        Nombre: doc.data().Nombre,
+        Colegiatura: doc.data().Colegiatura,
+        Adeudos: doc.data().Deuda,
+        Curso: doc.data().Curso,
+        Horario: doc.data().Horario,
+        Profesor: doc.data().Profesor
+      }));
+  
+     
+  
+        // 1. Convierte los datos a una hoja de Excel
+    const worksheet = XLSX.utils.json_to_sheet(deudoresList);
+    // 2. Crea un libro de Excel y agrega la hoja
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'AlumnosActivos');
+    // 3. Genera el archivo Excel en formato binario
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    // 4. Descarga el archivo usando file-saver
+    const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    saveAs(blob, 'AlumnosActivos.xlsx');
+  
+    };
 
   const renderContent = () => {
     switch (tipo) {
@@ -846,6 +901,58 @@ const cursos = [
 
           </>
         );
+
+      case 'activos':
+        return (
+          <>
+            <div className='d-flex flex-row justify-content-center'>
+              <h1 className='display-3'>Alumnos Activos</h1>
+            </div>
+
+
+            <div className='d-flex flex-row justify-content-between' >
+              <button className="btn btn-primary w-50 mx-2" onClick={buscarAlumnosActivos}>Ver Activos</button>
+              <button className="btn btn-success w-50 mx-2" onClick={DescargarA}>Descargar</button>
+
+            </div>
+
+
+
+
+
+            <table className="table m-2">
+              <thead>
+                <tr>
+                  <th>Matricula</th>
+                  <th>Nombre</th>
+                  <th>Colegiatura</th>
+                  <th>Adeudos</th>
+                  <th>Especialidad</th>
+                  <th>Horario</th>
+                  <th>Profesor</th>
+                </tr>
+
+              </thead>
+
+              <tbody>
+                {datosAluA.map((alumno) => (
+                  <tr key={alumno.id}>
+                    <td>{alumno.id}</td>
+                    <td>{alumno.Nombre}</td>
+                    <td>{alumno.Colegiatura}</td>
+                    <td>{alumno.Deuda}</td>
+                    <td>{alumno.Curso}</td>
+                    <td>{alumno.Horario}</td>
+                    <td>{alumno.Profesor}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+          </>
+        );
+
+
 
       default:
         return <p>Tipo no reconocido</p>;
