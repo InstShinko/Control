@@ -36,8 +36,8 @@ function Registro() {
     { value: "Certificación Internacional CERTIPORT", label: "Certificación Internacional CERTIPORT" },
     { value: "Inglés Shinko", label: "Inglés Shinko" },
     { value: "Certificación Internacional Inglés", label: "Certificación Internacional Inglés" },
-    { value: "Francés Shinko", label: "Francés Shinko" },
-    { value: "Japonés Shinko", label: "Japonés Shinko" },
+    { value: "Diplomado IA Shinko", label: "Diplomado IA Shinko" },
+    { value: "Diplomado Excel Pro Shinko", label: "Diplomado Excel Pro Shinko" },
     { value: "Inglés Junior Shinko", label: "Inglés Junior Shinko" },
     { value: "Matemáticas Shinko", label: "Matemáticas Shinko" },
     { value: "Guitarra Shinko", label: "Guitarra Shinko" }
