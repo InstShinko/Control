@@ -50,7 +50,7 @@ function Alumno() {
     }));
   };
 
-  const profesores = [
+    const profesores = [
     { value: "ANGEL JOEL ALVAREZ CABALLERO", label: "ANGEL JOEL ALVAREZ CABALLERO" },
     { value: "DANIEL GARRIDO LUNA", label: "DANIEL GARRIDO LUNA" },
     { value: "JAEL ALVAREZ CABALLERO", label: "JAEL ALVAREZ CABALLERO" },
@@ -59,8 +59,11 @@ function Alumno() {
     { value: "JORGE IGNACIO MANRIQUEZ", label: "JORGE IGNACIO MANRIQUEZ" },
     { value: "LIZETH ALVAREZ CABALLERO", label: "LIZETH ALVAREZ CABALLERO" },
     { value: "LIZBETH YUNUEN MARTINEZ HERRERA", label: "LIZBETH YUNUEN MARTINEZ HERRERA" },
+    { value: "MICHEL LÓPEZ CORTÉS", label: "MICHEL LÓPEZ CORTÉS" },
     { value: "PAOLA MONSERRATH ORTEGA SANCHEZ", label: "PAOLA MONSERRATH ORTEGA SANCHEZ" },
+    { value: "SARA GUADALUPE PÉREZ ROMERO", label: "SARA GUADALUPE PÉREZ ROMERO" },
     { value: "SAUL JIMENEZ MERCADO", label: "SAUL JIMENEZ MERCADO" },
+    { value: "SHARON SHIREL HERNÁNDEZ VÁZQUEZ", label: "SHARON SHIREL HERNÁNDEZ VÁZQUEZ" },
     { value: "VANESSA CARRASCO CERVANTES", label: "VANESSA CARRASCO CERVANTES" },
     { value: "PENDIENDTE", label: "PENDIENDTE" },
   ];
