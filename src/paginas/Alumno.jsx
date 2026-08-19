@@ -181,6 +181,7 @@ function Alumno() {
   ];
 
 
+  
   const location = useLocation();
   const tipo = location.state?.tipo || 'modi'; // Valor predeterminado si no se pasa `tipo`
 
