@@ -71,7 +71,7 @@ function Alumno() {
 
   const cursos = [
     { value: "Bachillerato CUG", label: "Bachillerato CUG" },
-
+    { value: "Gestión Administrativa Inteligente Shinko", label: "Gestión Administrativa Inteligente Shinko" },
     { value: "Diseño Grafico Shinko", label: "Diseño Grafico Shinko" },
     { value: "Programación Shinko", label: "Programación Shinko" },
     { value: "Ofimatica Shinko", label: "Ofimatica Shinko" },
@@ -136,6 +136,16 @@ function Alumno() {
     { value: "Diseño-Modelado e impresión 3D Shinko", label: "Diseño-Modelado e impresión 3D Shinko" },
     { value: "Diseño-Diseño Web Esencial Shinko", label: "Diseño-Diseño Web Esencial Shinko" },
     { value: "Diseño-Proyecto Laboral Shinko", label: "Diseño-Proyecto Laboral Shinko" },
+    { value: "Gestión-Ecosistemas Digitales", label: "Gestión-Ecosistemas Digitales" },
+    { value: "Gestión-Excel Profesional para Negocios", label: "Gestión-Excel Profesional para Negocios" },
+    { value: "Gestión-Contabilidad Empresarial Digital", label: "Gestión-Contabilidad Empresarial Digital" },
+    { value: "Gestión-Operaciones Empresariales Digitales", label: "Gestión-Operaciones Empresariales Digitales" },
+    { value: "Gestión-Fiscalidad Digital y Facturación", label: "Gestión-Fiscalidad Digital y Facturación" },
+    { value: "Gestión-Productividad Ejecutiva", label: "Gestión-Productividad Ejecutiva" },
+    { value: "Gestión-Automatización Empresarial", label: "Gestión-Automatización Empresarial" },
+    { value: "Gestión-Inteligencia Artificial para Negocios", label: "Gestión-Inteligencia Artificial para Negocios" },
+    { value: "Gestión-Marketing Digital y Experiencia del Cliente", label: "Gestión-Marketing Digital y Experiencia del Cliente" },
+    { value: "Gestión-Laboratorio Empresarial", label: "Gestión-Laboratorio Empresarial" },
     { value: "A1 Junior-Optional Step 1", label: "A1 Junior-Optional Step 1" },
     { value: "A1 Junior-Optional Step 2", label: "A1 Junior-Optional Step 2" },
     { value: "A2 Junior-Starter's Step 1", label: "A2 Junior-Starter's Step 1" },

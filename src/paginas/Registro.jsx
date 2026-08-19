@@ -26,7 +26,7 @@ function Registro() {
 
   const cursos = [
     { value: "Bachillerato CUG", label: "Bachillerato CUG" },
-
+{ value: "Verano Shinko", label: "Verano Shinko" },
     { value: "Diseño Grafico Shinko", label: "Diseño Grafico Shinko" },
     { value: "Programación Shinko", label: "Programación Shinko" },
     { value: "Ofimatica Shinko", label: "Ofimatica Shinko" },
